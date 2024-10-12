@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.EmpresasActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.HomeActivity"
             android:exported="false" />
         <activity
