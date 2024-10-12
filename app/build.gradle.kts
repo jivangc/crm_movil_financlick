@@ -77,4 +77,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1") // Versión compatible de AppCompat
+    implementation("com.google.android.material:material:1.9.0") // Material Components
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
