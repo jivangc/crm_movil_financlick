@@ -12,18 +12,24 @@ import com.financlick.crm_financlick_movil.R
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
         enableEdgeToEdge()
+        setContentView(R.layout.activity_home)
 
-        val button = findViewById<ImageButton>(R.id.empresasButton)
         val quejasButton: ImageButton = findViewById(R.id.quejasButton)
+        val button = findViewById<ImageButton>(R.id.empresasButton)
+
+        button.setOnClickListener {
+            showEmpresas()
+        }
 
         quejasButton.setOnClickListener{
             val intent = Intent(this, QuejasActivity::class.java)
             startActivity(intent)
         }
-
     }
 
-
+    fun showEmpresas() {
+        val intent = Intent(this, EmpresasActivity::class.java)
+        startActivity(intent)
+    }
 }
