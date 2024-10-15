@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Solicitar"
+                        android:text="Quejas"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
 
@@ -109,7 +109,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/datosButton"
+                        android:id="@+id/empresasButton"
                         android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Mis Datos"
+                        android:text="Empresas"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
 

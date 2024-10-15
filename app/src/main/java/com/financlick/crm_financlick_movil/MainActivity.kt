@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Asegúrate de que el tema está aplicado antes de llamar a super.onCreate
+
         setContentView(R.layout.activity_main)
 
         // Inicializa las vistas
