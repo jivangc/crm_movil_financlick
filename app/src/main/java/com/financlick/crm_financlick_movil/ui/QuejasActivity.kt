@@ -3,8 +3,12 @@ package com.financlick.crm_financlick_movil.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
+import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
+import com.financlick.crm_financlick_movil.items.CardQuejaItem
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,8 +19,44 @@ class QuejasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quejas)
 
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val adapter = CardQuejaAdapter(emptyList())
+        recyclerView.adapter = adapter
+
+        // Prueba
+        val quejasPrueba: List<CardQuejaItem> = listOf(
+            CardQuejaItem(
+                titulo = "Queja 1",
+                queja = "Descripción de la queja 1"
+            ),
+            CardQuejaItem(
+                titulo = "Sugerencia 1",
+                queja = "Descripción de la queja 2"
+            ),
+            CardQuejaItem(
+                titulo = "Queja 2",
+                queja = "Descripción de la queja 3"
+            ),
+            CardQuejaItem(
+                titulo = "Sugerencia 2",
+                queja = "Descripción de la queja 4"
+            ),
+            CardQuejaItem(
+                titulo = "Queja 3",
+                queja = "Descripción de la queja 5"
+            ),
+            CardQuejaItem(
+                titulo = "Sugerencia 3",
+                queja = "Descripción de la queja 6"
+            ),
+        )
+
+        adapter.updateItems(quejasPrueba)
+
         // Obtener todas las quejas
-        getAllQuejas()
+        //getAllQuejas()
     }
 
     private fun getAllQuejas() {

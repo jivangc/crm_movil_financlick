@@ -12,8 +12,8 @@ import com.financlick.crm_financlick_movil.R
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
         enableEdgeToEdge()
+        setContentView(R.layout.activity_home)
 
         val button = findViewById<ImageButton>(R.id.empresasButton)
         val quejasButton: ImageButton = findViewById(R.id.quejasButton)
