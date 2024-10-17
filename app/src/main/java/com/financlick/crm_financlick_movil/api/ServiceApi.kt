@@ -1,27 +1,37 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
-interface QuejaApi {
+interface ServiceApi {
 
+    // ------------- ACCESO -------------
+    @POST("Usuario/login")
+    fun login(@Body loginModel: LoginModel): Call<ResponseBody>
+
+    @GET("Usuario/detail")
+    fun getUser(): Call<ResponseBody>
+
+    // ------------- QUEJAS Y SUGERENCIAS -------------
     // Obtener todas las quejas
-    @GET("api/QuejaSugerencium")
+    @GET("QuejaSugerencium")
     fun getQuejas(): Call<List<QuejaModel>>
 
     // Obtener una queja por ID
-    @GET("api/QuejaSugerencium/{id}")
+    @GET("QuejaSugerencium/{id}")
     fun getQueja(@Path("id") id: Int): Call<QuejaModel>
 
     // Crear una nueva queja
-    @POST("api/QuejaSugerencium")
+    @POST("QuejaSugerencium")
     fun createQueja(@Body queja: QuejaModel): Call<QuejaModel>
 
     // Actualizar una queja existente
-    @PUT("api/QuejaSugerencium/{id}")
+    @PUT("QuejaSugerencium/{id}")
     fun updateQueja(@Path("id") id: Int, @Body queja: QuejaModel): Call<Void>
 
     // Eliminar una queja
-    @DELETE("api/QuejaSugerencium/{id}")
+    @DELETE("QuejaSugerencium/{id}")
     fun deleteQueja(@Path("id") id: Int): Call<Void>
 }

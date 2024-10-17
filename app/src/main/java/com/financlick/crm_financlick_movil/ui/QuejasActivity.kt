@@ -60,7 +60,7 @@ class QuejasActivity : AppCompatActivity() {
     }
 
     private fun getAllQuejas() {
-        RetrofitClient.api.getQuejas().enqueue(object : Callback<List<QuejaModel>> {
+        RetrofitClient.instance.getQuejas().enqueue(object : Callback<List<QuejaModel>> {
             override fun onResponse(call: Call<List<QuejaModel>>, response: Response<List<QuejaModel>>) {
                 if (response.isSuccessful) {
                     val quejas = response.body()
@@ -78,7 +78,7 @@ class QuejasActivity : AppCompatActivity() {
     }
 
     private fun createQueja(queja: QuejaModel) {
-        RetrofitClient.api.createQueja(queja).enqueue(object : Callback<QuejaModel> {
+        RetrofitClient.instance.createQueja(queja).enqueue(object : Callback<QuejaModel> {
             override fun onResponse(call: Call<QuejaModel>, response: Response<QuejaModel>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@QuejasActivity, "Queja creada con éxito", Toast.LENGTH_SHORT).show()
@@ -95,7 +95,7 @@ class QuejasActivity : AppCompatActivity() {
 
 
     private fun updateQueja(id: Int, queja: QuejaModel) {
-        RetrofitClient.api.updateQueja(id, queja).enqueue(object : Callback<Void> {
+        RetrofitClient.instance.updateQueja(id, queja).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@QuejasActivity, "Queja actualizada", Toast.LENGTH_SHORT).show()
@@ -111,7 +111,7 @@ class QuejasActivity : AppCompatActivity() {
     }
 
     private fun deleteQueja(id: Int) {
-        RetrofitClient.api.deleteQueja(id).enqueue(object : Callback<Void> {
+        RetrofitClient.instance.deleteQueja(id).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@QuejasActivity, "Queja eliminada", Toast.LENGTH_SHORT).show()

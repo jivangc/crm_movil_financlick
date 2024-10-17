@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.config.SessionManager
-import com.financlick.crm_financlick_movil.models.LoginModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.financlick.crm_financlick_movil.ui.HomeActivity
@@ -22,7 +20,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    lateinit var contexto: Context
     private lateinit var emailInputLayout: TextInputLayout
     private lateinit var emailInput: TextInputEditText
     private lateinit var contrasenaInputLayout: TextInputLayout
@@ -33,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        contexto = this
-        sessionManager = SessionManager(this)
 
         // Inicializa las vistas
         contrasenaInputLayout = findViewById(R.id.passwordInputLayout)
@@ -42,14 +37,8 @@ class MainActivity : AppCompatActivity() {
         contrasenaInput = findViewById(R.id.passwordEditText)
         emailInput = findViewById(R.id.usernameEditText)
 
-        val loginButton = findViewById<Button>(R.id.loginButton)
-        loginButton.setOnClickListener {
-            if(formValido()){
-                val params = LoginModel(emailInput.text.toString(), contrasenaInput.text.toString())
-                login(params)
-            } else {
-                Toast.makeText(this, "Existe información incorrecta", Toast.LENGTH_SHORT).show()
-            }
+        findViewById<Button>(R.id.loginButton).setOnClickListener {
+            login(emailInput.text.toString(), contrasenaInput.text.toString())
         }
     }
 
@@ -70,43 +59,21 @@ class MainActivity : AppCompatActivity() {
         return valido
     }
 
-    fun login(param: LoginModel) {
-        // Mostrar el ProgressBar
-        //progressBar.visibility = View.VISIBLE
-        Toast.makeText(this, "Iniciando Sesion", Toast.LENGTH_SHORT).show()
+    private fun login(user: String, password: String) {
+        val defaultEmail = "admin"
+        val defaultPassword = "admin"
 
-        RetrofitClient.instance.login(param).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                // Ocultar el ProgressBar
-                //progressBar.visibility = View.GONE
+        if (user.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Por favor, ingresa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-                if (response.isSuccessful) {
-                    val stringJson = response.body()?.string()
-                    val jsonObject = JsonParser.parseString(stringJson).asJsonObject
-                    val token = jsonObject.get("token")?.asString
-                    Log.i("MainActivity", "Token: $token")
-                    if (token != null) {
-                        getCurrentUser(token)
-                        val intent = Intent(contexto, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(contexto, "Ha ocurrido un error al iniciar sesion, intente nuevamente", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(contexto, response.errorBody()?.string(), Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                // Ocultar el ProgressBar
-                //progressBar.visibility = View.GONE
-
-                // Manejar la falla
-                Log.e("MainActivity", "Failure: ${t.message}")
-                Toast.makeText(contexto, "Fallo en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        if (user == defaultEmail && password == defaultPassword) {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun getCurrentUser(token: String) {
@@ -132,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                         // Verifica si los valores se guardaron correctamente
                         val savedUser = sessionManager.getUser()
                         val savedToken = sessionManager.getToken()
-                        Log.i("MainActivity", "Saved User: ${savedUser?.usuario1}")
+                        Log.i("MainActivity", "Saved User: ${savedUser?.usuario}")
                         Log.i("MainActivity", "Saved Token: $savedToken")
                     } else {
                         Log.e("MainActivity", "UsuarioCliente is null")
