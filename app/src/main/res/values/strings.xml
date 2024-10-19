@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">crm_financlick_movil</string>
+    <string name="app_name">CRM Financlick</string>
+
+    <string-array name="prioridades_array">
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+    </string-array>
+
+    <string-array name="estatus_array">
+        <item>Abierto</item>
+        <item>En proceso</item>
+        <item>Resuelto</item>
+        <item>Cerrado</item>
+    </string-array>
 </resources>

@@ -10,9 +10,9 @@ data class QuejaModel(
     @SerializedName("fechaRegistro") val fechaRegistro: String,
     @SerializedName("estado") val estado: Int,
     @SerializedName("fechaResolucion") val fechaResolucion: String? = null,
-    @SerializedName("responsable") val responsable: String? = null,
+    @SerializedName("responsable") val responsable: Int? = 0,
     @SerializedName("prioridad") val prioridad: Int? = 0,
     @SerializedName("comentarios") val comentarios: String? = null
-){
+) {
 
 }

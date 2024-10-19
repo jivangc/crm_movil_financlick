@@ -25,7 +25,7 @@ interface ServiceApi {
 
     // Crear una nueva queja
     @POST("QuejaSugerencium")
-    fun createQueja(@Body queja: QuejaModel): Call<QuejaModel>
+    fun createQueja(@Body queja: QuejaModel): Call<ResponseBody>
 
     // Actualizar una queja existente
     @PUT("QuejaSugerencium/{id}")
