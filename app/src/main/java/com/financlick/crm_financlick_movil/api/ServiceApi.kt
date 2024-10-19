@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import okhttp3.ResponseBody
@@ -34,4 +35,21 @@ interface ServiceApi {
     // Eliminar una queja
     @DELETE("QuejaSugerencium/{id}")
     fun deleteQueja(@Path("id") id: Int): Call<Void>
+
+    // ------------- EMPRESAS -------------
+    // Obtener todas las empresas
+    @GET("Empresa")
+    fun getEmpresas(): Call<List<EmpresaModel>>
+
+    //Crear una nueva empresa
+    @POST("Empresa")
+    fun createEmpresa(@Body empresa: EmpresaModel): Call<EmpresaModel>
+
+    //Actualizar una empresa existente
+    @PUT("Empresa/{idEmpresa}")
+    fun updateEmpresa(@Path("idEmpresa") idEmpresa: Int, @Body empresa: EmpresaModel): Call<Void>
+
+    //Eliminar una empresa
+    @DELETE("Empresa/{idEmpresa}")
+    fun deleteEmpresa(@Path("id") id: Int): Call<Void>
 }
