@@ -1,6 +1,9 @@
 package com.financlick.crm_financlick_movil.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,11 +13,16 @@ import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardQuejaItem
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 
 class QuejasActivity : AppCompatActivity() {
+    private lateinit var floatingButton: FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quejas)
@@ -25,103 +33,52 @@ class QuejasActivity : AppCompatActivity() {
         val adapter = CardQuejaAdapter(emptyList())
         recyclerView.adapter = adapter
 
-        // Prueba
-        val quejasPrueba: List<CardQuejaItem> = listOf(
-            CardQuejaItem(
-                titulo = "Queja 1",
-                queja = "Descripción de la queja 1"
-            ),
-            CardQuejaItem(
-                titulo = "Sugerencia 1",
-                queja = "Descripción de la queja 2"
-            ),
-            CardQuejaItem(
-                titulo = "Queja 2",
-                queja = "Descripción de la queja 3"
-            ),
-            CardQuejaItem(
-                titulo = "Sugerencia 2",
-                queja = "Descripción de la queja 4"
-            ),
-            CardQuejaItem(
-                titulo = "Queja 3",
-                queja = "Descripción de la queja 5"
-            ),
-            CardQuejaItem(
-                titulo = "Sugerencia 3",
-                queja = "Descripción de la queja 6"
-            ),
-        )
+        this.getQuejas { quejas ->
+            adapter.updateItems(quejas)
+        }
 
-        adapter.updateItems(quejasPrueba)
-
-        // Obtener todas las quejas
-        //getAllQuejas()
+        floatingButton = findViewById(R.id.addQueja)
+        floatingButton.setOnClickListener {
+            val intent = Intent(this, QuejaFormActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
-    private fun getAllQuejas() {
-        RetrofitClient.instance.getQuejas().enqueue(object : Callback<List<QuejaModel>> {
+    private fun getQuejas(onComplete: (List<CardQuejaItem>) -> Unit) {
+        RetrofitClient.instance.getQuejas().enqueue(object: Callback<List<QuejaModel>>{
             override fun onResponse(call: Call<List<QuejaModel>>, response: Response<List<QuejaModel>>) {
                 if (response.isSuccessful) {
-                    val quejas = response.body()
-                    // Manejar las quejas obtenidas
-                    Toast.makeText(this@QuejasActivity, "Quejas obtenidas: ${quejas?.size}", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@QuejasActivity, "Error al obtener quejas", Toast.LENGTH_SHORT).show()
+                    val quejas = response.body() ?: emptyList()
+                    if (quejas.isNotEmpty()) {
+                        val cardQuejas = quejas.map { queja ->
+                            CardQuejaItem(
+                                idQuejaSugerencia = queja.idQuejaSugerencia,
+                                idEmpresa = queja.idEmpresa,
+                                tipo = queja.tipo,
+                                descripcion = queja.descripcion,
+                                fechaRegistro = queja.fechaRegistro,
+                                estatus = queja.estado,
+                                fechaResolucion = queja.fechaResolucion,
+                                responsable = queja.responsable,
+                                prioridad = queja.prioridad,
+                                comentarios = queja.comentarios,
+                                archivoAdjunto = ""
+                            )
+                        }
+                        onComplete(cardQuejas)
+                    }else{
+                        onComplete(emptyList())
+                    }
+                }else{
+                    onComplete(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<List<QuejaModel>>, t: Throwable) {
-                Toast.makeText(this@QuejasActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun createQueja(queja: QuejaModel) {
-        RetrofitClient.instance.createQueja(queja).enqueue(object : Callback<QuejaModel> {
-            override fun onResponse(call: Call<QuejaModel>, response: Response<QuejaModel>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@QuejasActivity, "Queja creada con éxito", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@QuejasActivity, "Error al crear queja", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<QuejaModel>, t: Throwable) {
-                Toast.makeText(this@QuejasActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-
-    private fun updateQueja(id: Int, queja: QuejaModel) {
-        RetrofitClient.instance.updateQueja(id, queja).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@QuejasActivity, "Queja actualizada", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@QuejasActivity, "Error al actualizar la queja", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(this@QuejasActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun deleteQueja(id: Int) {
-        RetrofitClient.instance.deleteQueja(id).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@QuejasActivity, "Queja eliminada", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@QuejasActivity, "Error al eliminar la queja", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(this@QuejasActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+                // Manejar la falla de la llamada, por ejemplo, mostrar un mensaje de error
+                Log.e("PAULOOOOOO", t.toString())
+                onComplete(emptyList())
             }
         })
     }

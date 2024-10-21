@@ -150,6 +150,19 @@
                 </FrameLayout>
             </LinearLayout>
 
+            <!-- Botón flotante para agregar una nueva queja o sugerencia -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addQueja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/add"
+                android:contentDescription="Agregar nueva queja o sugerencia"
+                app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@android:color/white"
+                app:backgroundTint="#4CAF50"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
