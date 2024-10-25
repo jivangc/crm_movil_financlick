@@ -2,6 +2,7 @@ package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
+import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -52,4 +53,18 @@ interface ServiceApi {
     //Eliminar una empresa
     @DELETE("Empresa/{idEmpresa}")
     fun deleteEmpresa(@Path("id") id: Int): Call<Void>
+
+    // Planificacion
+
+    @GET("ContactoPersona")
+    fun getContactos(): Call<List<PlanificacionModel>>
+
+    @POST("contactopersona")
+    fun createContacto(@Body ContactoPersona: PlanificacionModel): Call<PlanificacionModel>
+
+    @PUT("contactopersona/{id}")
+    fun updateContacto(@Path("id") id: Int, @Body ContactoPersona: PlanificacionModel): Call<Void>
+
+    @DELETE("contactopersona/{id}")
+    fun deleteContacto(@Path("id") id: Int): Call<Void>
 }
