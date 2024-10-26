@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
-import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter.CardQuejaViewHolder
 import com.financlick.crm_financlick_movil.items.CardEmpresasItem
-import com.financlick.crm_financlick_movil.items.CardQuejaItem
+import com.financlick.crm_financlick_movil.ui.EmpresaFormActivity
+import com.google.gson.Gson
 
 class CardEmpresaAdapter (private var items: List<CardEmpresasItem>): RecyclerView.Adapter<CardEmpresaAdapter.CardEmpresaViewHolder>() {
 
@@ -20,15 +21,19 @@ class CardEmpresaAdapter (private var items: List<CardEmpresasItem>): RecyclerVi
     }
 
     override fun onBindViewHolder(holder: CardEmpresaViewHolder, position: Int) {
-        val productItem = items[position]
+        val empresaItem = items[position]
 
         // Configura los datos de la tarjeta
-        holder.titleView.text = productItem.nombreEmpresa
-        holder.descriptionView.text = productItem.razonSocial
+        holder.titleView.text = empresaItem.nombreEmpresa
+        holder.descriptionView.text = empresaItem.razonSocial
 
         // Configura el botón
         holder.buttonView.setOnClickListener {
+            //Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
+            val intent = Intent(holder.itemView.context, EmpresaFormActivity::class.java)
+            intent.putExtra("empresa", Gson().toJson(empresaItem))
             Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
+            holder.itemView.context.startActivity(intent)
         }
     }
 

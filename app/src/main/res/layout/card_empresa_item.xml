@@ -1,165 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.HomeActivity">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-    <!-- Contenido principal de la actividad -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-        <!-- Contenedor para el Toolbar y el RecyclerView -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+        <!-- Ícono -->
+        <ImageView
+            android:id="@+id/cardIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/producto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/cardTitle"/>
 
-            <!-- Toolbar -->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#0149AC"
-                android:padding="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:fitsSystemWindows="true">
+        <!-- Título de la tarjeta -->
+        <TextView
+            android:id="@+id/cardTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Título del Producto"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/cardIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"
+            android:layout_marginStart="8dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+        <!-- Descripción de la tarjeta -->
+        <TextView
+            android:id="@+id/cardDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Descripción del Producto"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardTitle"
+            app:layout_constraintTop_toBottomOf="@id/cardTitle"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
 
-                    <ImageButton
-                        android:id="@+id/backIcon"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/back"
-                        android:scaleType="fitCenter" />
-
-                    <TextView
-                        android:id="@+id/welcomeText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="45dp"
-                        android:layout_weight="1"
-                        android:text="Empresas"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp"
-                        android:gravity="center" />
-
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
-            <!-- Título de la sección -->
-            <TextView
-                android:id="@+id/tituloQuejas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Listado de Empresas"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"
-                android:gravity="center"/>
-
-            <!-- RecyclerView para las quejas -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tituloQuejas"
-                app:layout_constraintBottom_toTopOf="@id/bottomNavigation" />
-
-            <!-- Bottom Navigation -->
-            <LinearLayout
-                android:id="@+id/bottomNavigation"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="#FFFFFF"
-                android:elevation="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnMenu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/pagina_de_inicio"
-                        app:tint="#1E88E5" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnRequests"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/solicitudes"
-                        app:tint="#1E88E5" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnNotifications"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/notificaciones"
-                        app:tint="#1E88E5" />
-
-                </FrameLayout>
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <!-- Botón opcional -->
+        <Button
+            android:id="@+id/cardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large" />
+            android:text="Seleccionar"
+            android:backgroundTint="#0149AC"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/simular"
+            android:drawablePadding="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </FrameLayout>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.cardview.widget.CardView>

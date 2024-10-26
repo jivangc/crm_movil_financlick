@@ -43,7 +43,7 @@ interface ServiceApi {
 
     //Crear una nueva empresa
     @POST("Empresa")
-    fun createEmpresa(@Body empresa: EmpresaModel): Call<EmpresaModel>
+    fun createEmpresa(@Body empresa: EmpresaModel): Call<ResponseBody>
 
     //Actualizar una empresa existente
     @PUT("Empresa/{idEmpresa}")
