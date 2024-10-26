@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="45dp"
                         android:layout_weight="1"
-                        android:text="Quejas y sugerencias"
+                        android:text="Campañas de Correo"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:gravity="center" />
@@ -66,7 +66,7 @@
                 android:id="@+id/tituloQuejas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quejas"
+                android:text="Campañas"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -174,7 +174,7 @@
 
             <!-- Botón flotante para agregar una nueva queja o sugerencia -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addQueja"
+                android:id="@+id/addCampania"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"

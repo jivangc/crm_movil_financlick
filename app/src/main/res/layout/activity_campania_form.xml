@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenedor para el Toolbar y el Formulario -->
+        <!-- Contenedor para el Toolbar y el RecyclerView -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,8 +51,9 @@
                         android:id="@+id/welcomeText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="45dp"
                         android:layout_weight="1"
-                        android:text="Quejas y sugerencias"
+                        android:text="Campaña de Correo"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:gravity="center" />
@@ -65,15 +66,16 @@
                 android:id="@+id/tituloQuejas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Formulario de Quejas"
+                android:text="Campaña"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp"
-                android:gravity="center" />
+                android:gravity="center"/>
 
+            <!-- Formulario de campanias -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -86,9 +88,8 @@
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true">
 
-                    <!-- Tipo de Queja o Sugerencia -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tipoLayout"
+                        android:id="@+id/tipoCampaniaLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,199 +101,153 @@
                         android:layout_marginEnd="16dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tipoInput"
+                            android:id="@+id/tipoCampaniaInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Tipo de queja o sugerencia"
+                            android:hint="Tipo de Campaña"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Descripción de la queja o sugerencia -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/descripcionLayout"
+                        android:id="@+id/tituloCampaniaLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tipoLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/descripcionInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Descripción"
-                            android:inputType="textMultiLine"
-                            android:minLines="3"
-                            android:gravity="top|start" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Prioridad (Spinner) -->
-                    <TextView
-                        android:id="@+id/prioridadLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Prioridad"
-                        app:layout_constraintTop_toBottomOf="@id/descripcionLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp" />
-
-                    <Spinner
-                        android:id="@+id/prioridadSpinner"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/prioridades_array"
-                        app:layout_constraintTop_toBottomOf="@id/prioridadLabel"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tipoCampaniaLayout"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp" />
-
-                    <!-- Fecha de Registro -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/fechaRegistroLayout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/prioridadSpinner"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
+                        android:hint="Título de la Campaña">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/fechaRegistroInput"
+                            android:id="@+id/tituloCampaniaInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Fecha de Registro"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Estatus (Spinner) -->
-                    <TextView
-                        android:id="@+id/estatusLabel"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/descripcionCampaniaLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Estatus"
-                        app:layout_constraintTop_toBottomOf="@id/fechaRegistroLayout"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tituloCampaniaLayout"
                         android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp" />
-
-                    <Spinner
-                        android:id="@+id/estatusSpinner"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/estatus_array"
-                        app:layout_constraintTop_toBottomOf="@id/estatusLabel"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp" />
+                        android:hint="Descripción de la Campaña">
 
-                    <!-- Fecha de Resolución -->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/descripcionCampaniaInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:minLines="3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/fechaResolucionLayout"
+                        android:id="@+id/dominioCampaniaLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/estatusSpinner"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/descripcionCampaniaLayout"
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
+                        android:layout_marginEnd="16dp"
+                        android:hint="Dominio de la Campaña">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/fechaResolucionInput"
+                            android:id="@+id/dominioCampaniaInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Fecha de Resolución"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Comentarios -->
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/comentariosLayout"
+                        android:id="@+id/fechaInicioLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/fechaResolucionLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dominioCampaniaLayout"
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
+                        android:layout_marginEnd="16dp"
+                        android:hint="Fecha de Inicio">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/comentariosInput"
+                            android:id="@+id/fechaInicioInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Comentarios"
+                            android:focusable="false"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fechaFinLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/fechaInicioLayout"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Fecha de Fin">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fechaFinInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/contenidoLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/fechaFinLayout"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Contenido del Correo">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/contenidoInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:minLines="2"
-                            android:gravity="top|start" />
+                            android:minLines="5" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Responsable (ID) -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/responsableLayout"
+                        android:id="@+id/adjuntoLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/comentariosLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/contenidoLayout"
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
+                        android:layout_marginEnd="16dp"
+                        android:hint="Adjunto (opcional)">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/responsableInput"
+                            android:id="@+id/adjuntoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Responsable (ID)"
-                            android:inputType="number" />
+                            android:inputType="textUri" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- ID de la Empresa -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/empresaIdLayout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/responsableLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/empresaIdInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="ID de la Empresa"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Botones -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/adjuntoLayout"
                         android:gravity="end"
                         android:layout_marginTop="24dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintTop_toBottomOf="@id/empresaIdLayout"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnCancelar"
@@ -311,11 +266,10 @@
                             style="@style/Widget.MaterialComponents.Button"
                             android:layout_marginStart="8dp"/>
                     </LinearLayout>
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
+
             <!-- Bottom Navigation -->
             <LinearLayout
                 android:id="@+id/bottomNavigation"
@@ -336,11 +290,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/pagina_de_inicio"
-                        app:tint="#1E88E5" />
+                        android:tint="#1E88E5" />
 
                 </FrameLayout>
 
@@ -350,15 +305,16 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btnRequests"
+                        android:id="@+id/btnPlanificacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/solicitudes"
-                        app:tint="#1E88E5" />
+                        android:src="@drawable/planificacion"
+                        android:tint="#1E88E5" />
 
                 </FrameLayout>
 
@@ -368,15 +324,35 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btnNotifications"
+                        android:id="@+id/btnVentas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/notificaciones"
-                        app:tint="#1E88E5" />
+                        android:src="@drawable/ventas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnFinanzas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/finanzas"
+                        android:tint="#1E88E5" />
 
                 </FrameLayout>
             </LinearLayout>

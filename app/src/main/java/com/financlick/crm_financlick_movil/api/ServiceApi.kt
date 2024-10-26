@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.api
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.financlick.crm_financlick_movil.models.QuejaRequestModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,7 +27,7 @@ interface ServiceApi {
 
     // Crear una nueva queja
     @POST("QuejaSugerencium")
-    fun createQueja(@Body queja: QuejaModel): Call<ResponseBody>
+    fun createQueja(@Body queja: QuejaRequestModel): Call<ResponseBody>
 
     // Actualizar una queja existente
     @PUT("QuejaSugerencium/{id}")

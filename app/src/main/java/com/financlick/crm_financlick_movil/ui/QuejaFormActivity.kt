@@ -1,6 +1,7 @@
 package com.financlick.crm_financlick_movil.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Spinner
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardQuejaItem
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.financlick.crm_financlick_movil.models.QuejaRequestModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
@@ -87,15 +89,16 @@ class QuejaFormActivity : AppCompatActivity() {
 
         btnEnviar.setOnClickListener() {
             val request = loadQuejaRequest()
-            if (queja.idQuejaSugerencia == 0) {
-                // Guardar Nuevo
-                Toast.makeText(this, "Guardando", Toast.LENGTH_SHORT).show()
-                guardarQueja(request)
-            }else{
-                // Actualizar
-                Toast.makeText(this, "Actualizacion", Toast.LENGTH_SHORT).show()
-                actualizarQueja(request)
-            }
+            guardarQueja(request)
+//            if (queja.idQuejaSugerencia == 0) {
+//                // Guardar Nuevo
+//                Toast.makeText(this, "Guardando", Toast.LENGTH_SHORT).show()
+//
+//            }else{
+//                // Actualizar
+//                Toast.makeText(this, "Actualizacion", Toast.LENGTH_SHORT).show()
+//                actualizarQueja(request)
+//            }
         }
 
         btnCancelar.setOnClickListener() {
@@ -103,8 +106,8 @@ class QuejaFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadQuejaRequest(): QuejaModel {
-        val queja = QuejaModel(
+    private fun loadQuejaRequest(): QuejaRequestModel {
+        val queja = QuejaRequestModel(
             idQuejaSugerencia = 0,
             idEmpresa = empresaIdInput.text.toString().toInt(),
             tipo = tipoInput.text.toString(),
@@ -120,19 +123,22 @@ class QuejaFormActivity : AppCompatActivity() {
         return queja
     }
 
-    private fun guardarQueja(param: QuejaModel) {
+    private fun guardarQueja(param: QuejaRequestModel) {
         RetrofitClient.instance.createQueja(param).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(contexto, "Documento subido exitosamente", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
-                    Toast.makeText(contexto, "Error en la respuesta: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    val error = response.errorBody()?.string()
+                    Toast.makeText(contexto, "Error en la respuesta: $error", Toast.LENGTH_SHORT).show()
+                    Log.i("Error", error ?: "No se pudo obtener el mensaje de error")
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(contexto, "Error en la solicitud: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.i("Error", call.toString())
             }
         })
     }

@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     Toast.makeText(contexto, response.errorBody()?.string(), Toast.LENGTH_SHORT).show()
+                    Log.i("MainActivity", "Error: ${response.errorBody()?.string()}")
                 }
             }
 

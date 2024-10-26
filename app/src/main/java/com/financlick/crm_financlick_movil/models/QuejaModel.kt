@@ -8,11 +8,12 @@ data class QuejaModel(
     @SerializedName("tipo") val tipo: String,
     @SerializedName("descripcion") val descripcion: String,
     @SerializedName("fechaRegistro") val fechaRegistro: String,
-    @SerializedName("estado") val estado: Int,
+    @SerializedName("estatus") val estado: Int,
     @SerializedName("fechaResolucion") val fechaResolucion: String? = null,
     @SerializedName("responsable") val responsable: Int? = 0,
     @SerializedName("prioridad") val prioridad: Int? = 0,
-    @SerializedName("comentarios") val comentarios: String? = null
+    @SerializedName("comentarios") val comentarios: String? = null,
+    @SerializedName("archivoAdjunto") val archivoAdjunto: String? = ""
 ) {
 
 }
