@@ -76,173 +76,240 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="100dp"
+                android:layout_height="0dp"
                 android:layout_marginBottom="60dp"
                 android:fillViewport="true"
-                app:layout_constraintTop_toBottomOf="@id/tituloFormulario">
+                app:layout_constraintTop_toBottomOf="@id/tituloFormulario"
+                app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
 
-                <TableLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="1"
                     android:padding="16dp">
 
-                    <!-- Fila de Plan -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Plan:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Plan -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/planLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/planInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Plan" />
-                    </TableRow>
+                            android:hint="Plan"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Fecha Solicitud -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fecha Solicitud:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Fecha de Solicitud -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fechaSolicitudLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/planLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fechaSolicitudInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese la Fecha de Solicitud"
-                            android:inputType="date" />
-                    </TableRow>
+                            android:hint="Fecha de Solicitud"
+                            android:inputType="date"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Nombre Cliente -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nombre Cliente:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Nombre Cliente -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nombreClienteLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/fechaSolicitudLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/nombreClienteInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Nombre del Cliente" />
-                    </TableRow>
+                            android:hint="Nombre del Cliente"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Nombre Empresa -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nombre Empresa:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Otros campos: Nombre Empresa, Número de Contacto, Correo, Domicilio, Ciudad, Estado, RFC -->
+                    <!-- Nombre Empresa -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nombreEmpresaLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/nombreClienteLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/nombreEmpresaInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Nombre de la Empresa" />
-                    </TableRow>
+                            android:hint="Nombre de la Empresa"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Número de Contacto -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Número de Contacto:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Número de Contacto -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/numeroContactoLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/nombreEmpresaLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/numeroContactoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Número de Contacto"
-                            android:inputType="phone" />
-                    </TableRow>
+                            android:hint="Número de Contacto"
+                            android:inputType="phone"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Correo -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Correo:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Correo -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/correoLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/numeroContactoLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/correoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Correo Electrónico"
-                            android:inputType="textEmailAddress" />
-                    </TableRow>
+                            android:hint="Correo Electrónico"
+                            android:inputType="textEmailAddress"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Domicilio -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Domicilio:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Domicilio -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/domicilioLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/correoLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/domicilioInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Domicilio" />
-                    </TableRow>
+                            android:hint="Domicilio"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Ciudad -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ciudad:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Ciudad -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ciudadLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/domicilioLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ciudadInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese la Ciudad" />
-                    </TableRow>
+                            android:hint="Ciudad"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de Estado -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Estado:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- Estado -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/estadoLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/ciudadLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/estadoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el Estado" />
-                    </TableRow>
+                            android:hint="Estado"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Fila de RFC -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="RFC:"
-                            android:textStyle="bold"
-                            android:paddingEnd="8dp" />
+                    <!-- RFC -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/rfcLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/estadoLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/rfcInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Ingrese el RFC"
-                            android:inputType="text" />
-                    </TableRow>
+                            android:hint="RFC"
+                            android:inputType="text"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                </TableLayout>
+                    <!-- Selección de Empleado -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/empleadoLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Selecciona empleado"
+                        app:layout_constraintTop_toBottomOf="@id/rfcLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp">
+
+                        <Spinner
+                            android:id="@+id/empleadoSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:padding="8dp"
+                            android:spinnerMode="dropdown" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
             <!-- Botones -->
@@ -253,7 +320,7 @@
                 android:gravity="end"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <com.google.android.material.button.MaterialButton
@@ -274,8 +341,35 @@
                     android:layout_marginStart="8dp" />
             </LinearLayout>
 
+            <!-- Bottom Navigation -->
+            <LinearLayout
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#FFFFFF"
+                android:elevation="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.45"
+                        android:scaleY="0.45"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/pagina_de_inicio"
+                        app:tint="#1E88E5" />
+                </FrameLayout>
+
+                <!-- Agrega más botones de navegación si es necesario -->
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </FrameLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

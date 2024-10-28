@@ -18,6 +18,9 @@
             android:name=".ui.VentasActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.VentaFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.PanificacionActivity"
             android:exported="false" />
         <activity

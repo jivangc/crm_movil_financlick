@@ -1,8 +1,11 @@
 package com.financlick.crm_financlick_movil.items
 
-class CardVentaItem (
+import java.io.Serializable
+
+data class CardVentaItem(
     val idVenta: Int,
-    val idPlan: Int,
+    val idVPlan: Int,
+    val idUsuario: Int?,
     val fechaSolicitud: String,
     val nombreCliente: String,
     val nombreEmpresa: String,
@@ -11,5 +14,5 @@ class CardVentaItem (
     val domicilio: String,
     val ciudad: String,
     val estado: String,
-    val rfc: String,
-)
+    val rfc: String
+) : Serializable

@@ -22,8 +22,14 @@ class HomeActivity : AppCompatActivity() {
         session = SessionManager(this)
         val quejasButton: ImageButton = findViewById(R.id.quejasButton)
         val button = findViewById<ImageButton>(R.id.empresasButton)
+        val ventasButton = findViewById<ImageButton>(R.id.perfilButton)
 
         Log.i("SESION", session.getUser().toString())
+
+        ventasButton.setOnClickListener(){
+            val intent = Intent(this, VentasActivity::class.java)
+            startActivity(intent)
+        }
 
         button.setOnClickListener {
             showEmpresas()

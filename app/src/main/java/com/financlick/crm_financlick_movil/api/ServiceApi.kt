@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.api
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.financlick.crm_financlick_movil.models.VentasModel
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -15,6 +16,9 @@ interface ServiceApi {
 
     @GET("Usuario/detail")
     fun getUser(): Call<ResponseBody>
+
+    @GET("Usuario/usuariosPorRol")
+    fun getUsuariosPorRol(@Query("idRol") idRol: Int = 7): Call<List<UsuarioModel>>
 
     // ------------- QUEJAS Y SUGERENCIAS -------------
     // Obtener todas las quejas
@@ -55,18 +59,18 @@ interface ServiceApi {
     fun deleteEmpresa(@Path("id") id: Int): Call<Void>
 
     // ------------- VENTAS -------------
-    @GET("Ventas")
+    @GET("VentasProspecto")
     fun getVentas(): Call<List<VentasModel>>
 
-    @GET("Ventas/{id}")
+    @GET("VentasProspecto/{id}")
     fun getVenta(@Path("id") id: Int): Call<VentasModel>
 
-    @POST("Venta")
+    @POST("VentasProspecto")
     fun createVenta(@Body venta: VentasModel): Call<ResponseBody>
 
-    @PUT("Venta/{id}")
-    fun updateVenta(@Path("id") id: Int, @Body venta: VentasModel): Call<Void>
+    @PUT("VentasProspecto/{id}") // Ajusta a la ruta completa en el backend si `Venta` no es suficiente.
+    fun updateVenta(@Path("id") id: Int, @Body fields: Map<String, Int>): Call<ResponseBody>
 
-    @DELETE("Venta/{id}")
+    @DELETE("VentasProspecto/{id}")
     fun deleteVenta(@Path("id") id: Int): Call<Void>
 }
