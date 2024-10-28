@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -213,19 +214,17 @@ class EmpresaFormActivity : AppCompatActivity() {
 
 
 
-    private fun loadEmpresaRequest(): EmpresaModel {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-        val fechaConstitucionDate = try {
-            dateFormat.parse(fechaConstitucion.text.toString())
-        } catch (e: Exception) {
-            null // Maneja el caso en que la fecha no sea válida
+
+    private fun loadEmpresaRequest(): EmpresaModel {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val fechaConstitucionDate = fechaConstitucion.text.toString().let {
+            try { dateFormat.parse(it) } catch (e: Exception) { null }
         }
 
-        val fechaInscripcionDate = try {
-            dateFormat.parse(fechaInscripcion.text.toString())
-        } catch (e: Exception) {
-            null // Maneja el caso en que la fecha no sea válida
+        val fechaInscripcionDate = fechaInscripcion.text.toString().let {
+            try { dateFormat.parse(it) } catch (e: Exception) { null }
         }
 
         val empresa = EmpresaModel(
@@ -259,11 +258,14 @@ class EmpresaFormActivity : AppCompatActivity() {
 
 
 
+
     private fun guardarEmpresa(param: EmpresaModel) {
         RetrofitClient.instance.createEmpresa(param).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(contexto, "Empresa guardada exitosamente", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(contexto, EmpresasActivity::class.java)
+                    startActivity(intent)
                     finish()
                 } else {
                     val errorBody = response.errorBody()?.string()
