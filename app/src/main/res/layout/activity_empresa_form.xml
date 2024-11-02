@@ -78,6 +78,20 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_idEmpresa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Id de la empresa Oculto" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -365,7 +379,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_logo"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:hint="Logo URL"
                             android:inputType="textUri" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -374,29 +388,44 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="end"
+                        android:gravity="center_horizontal"
                         android:layout_marginTop="24dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="42dp"
+                        android:layout_marginBottom="0dp"
                         app:layout_constraintTop_toBottomOf="@id/empresaIdLayout"
                         app:layout_constraintEnd_toEndOf="parent">
 
-                        <com.google.android.material.button.MaterialButton
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btn_cancel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="#F44336"
-                            android:text="Cancelar"
-                            style="@style/Widget.MaterialComponents.Button"
-                            android:layout_marginStart="8dp"/>
+                            android:src="@drawable/back"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Cancelar"
+                            android:backgroundTint="#F7DC6F"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_marginEnd="8dp"/>
 
-                        <com.google.android.material.button.MaterialButton
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btn_eliminar"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/delete"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Eliminar"
+                            android:backgroundTint="#F44336"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_marginEnd="8dp"/>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btn_submit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:src="@drawable/save"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Guardar"
                             android:backgroundTint="#4CAF50"
-                            android:text="Guardar"
-                            style="@style/Widget.MaterialComponents.Button"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
                             android:layout_marginStart="8dp"/>
                     </LinearLayout>
 
