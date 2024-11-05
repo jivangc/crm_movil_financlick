@@ -30,6 +30,9 @@
             android:name=".ui.MarketingActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.EmpresaFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.VentasActivity"
             android:exported="false" />
         <activity

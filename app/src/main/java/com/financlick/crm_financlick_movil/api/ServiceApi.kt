@@ -44,13 +44,13 @@ interface ServiceApi {
 
     //Crear una nueva empresa
     @POST("Empresa")
-    fun createEmpresa(@Body empresa: EmpresaModel): Call<EmpresaModel>
+    fun createEmpresa(@Body empresa: EmpresaModel): Call<ResponseBody>
 
     //Actualizar una empresa existente
-    @PUT("Empresa/{idEmpresa}")
-    fun updateEmpresa(@Path("idEmpresa") idEmpresa: Int, @Body empresa: EmpresaModel): Call<Void>
+    @PUT("Empresa/{id}")
+    fun updateEmpresa(@Body empresa: EmpresaModel, @Path("id") id: Int): Call<Void>
 
     //Eliminar una empresa
-    @DELETE("Empresa/{idEmpresa}")
+    @DELETE("Empresa/{id}")
     fun deleteEmpresa(@Path("id") id: Int): Call<Void>
 }

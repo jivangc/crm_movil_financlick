@@ -97,7 +97,7 @@ class EmpresasActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<EmpresaModel>>, t: Throwable) {
                 // Manejar la falla de la llamada, por ejemplo, mostrar un mensaje de error
-                Log.e("ERROR", t.toString())
+                Log.e("PAULOOOOOO", t.toString())
                 onComplete(emptyList())
             }
         })
