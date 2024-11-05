@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Declaración del permiso para llamadas telefónicas -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!-- Declaración de la característica de telefonía como no requerida -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.PlanificacionFormActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.SitioWebActivity"
             android:exported="false" />

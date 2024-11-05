@@ -3,12 +3,9 @@ package com.financlick.crm_financlick_movil.api
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
-<<<<<<< HEAD
 import com.financlick.crm_financlick_movil.models.QuejaRequestModel
-=======
 import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.financlick.crm_financlick_movil.models.VentasModel
->>>>>>> paulo
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

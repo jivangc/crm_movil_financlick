@@ -14,6 +14,9 @@ import com.financlick.crm_financlick_movil.models.LoginModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.financlick.crm_financlick_movil.ui.HomeActivity
+import com.financlick.crm_financlick_movil.ui.PanificacionActivity
+
+import com.financlick.crm_financlick_movil.ui.PlanificacionFormActivity
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import okhttp3.ResponseBody
@@ -87,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Token: $token")
                     if (token != null) {
                         getCurrentUser(token)
-                        val intent = Intent(contexto, HomeActivity::class.java)
+                        val intent = Intent(contexto, PanificacionActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
