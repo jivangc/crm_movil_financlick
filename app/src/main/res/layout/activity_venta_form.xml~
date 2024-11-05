@@ -361,70 +361,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.50"
-                        android:scaleY="0.50"
-                        android:scaleType="centerInside"
+                        android:scaleX="0.45"
+                        android:scaleY="0.45"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/pagina_de_inicio"
-                        android:tint="#1E88E5" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnPlanificacion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.50"
-                        android:scaleY="0.50"
-                        android:scaleType="centerInside"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/planificacion"
-                        android:tint="#1E88E5" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnVentas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.50"
-                        android:scaleY="0.50"
-                        android:scaleType="centerInside"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ventas"
-                        android:tint="#1E88E5" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btnFinanzas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.50"
-                        android:scaleY="0.50"
-                        android:scaleType="centerInside"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/finanzas"
-                        android:tint="#1E88E5" />
-
+                        app:tint="#1E88E5" />
                 </FrameLayout>
 
                 <!-- Agrega más botones de navegación si es necesario -->
