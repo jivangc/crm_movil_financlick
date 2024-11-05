@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Token: $token")
                     if (token != null) {
                         getCurrentUser(token)
-                        val intent = Intent(contexto, PanificacionActivity::class.java)
+                        val intent = Intent(contexto, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     Toast.makeText(contexto, response.errorBody()?.string(), Toast.LENGTH_SHORT).show()
+                    Log.i("MainActivity", "Error: ${response.errorBody()?.string()}")
                 }
             }
 

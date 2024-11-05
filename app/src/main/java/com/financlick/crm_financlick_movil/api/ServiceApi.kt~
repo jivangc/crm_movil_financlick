@@ -2,8 +2,10 @@ package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
-import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.financlick.crm_financlick_movil.models.QuejaRequestModel
+import com.financlick.crm_financlick_movil.models.UsuarioModel
+import com.financlick.crm_financlick_movil.models.VentasModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -16,6 +18,9 @@ interface ServiceApi {
     @GET("Usuario/detail")
     fun getUser(): Call<ResponseBody>
 
+    @GET("Usuario/usuariosPorRol")
+    fun getUsuariosPorRol(@Query("idRol") idRol: Int = 7): Call<List<UsuarioModel>>
+
     // ------------- QUEJAS Y SUGERENCIAS -------------
     // Obtener todas las quejas
     @GET("QuejaSugerencium")
@@ -27,7 +32,7 @@ interface ServiceApi {
 
     // Crear una nueva queja
     @POST("QuejaSugerencium")
-    fun createQueja(@Body queja: QuejaModel): Call<ResponseBody>
+    fun createQueja(@Body queja: QuejaRequestModel): Call<ResponseBody>
 
     // Actualizar una queja existente
     @PUT("QuejaSugerencium/{id}")
@@ -44,27 +49,29 @@ interface ServiceApi {
 
     //Crear una nueva empresa
     @POST("Empresa")
-    fun createEmpresa(@Body empresa: EmpresaModel): Call<EmpresaModel>
+    fun createEmpresa(@Body empresa: EmpresaModel): Call<ResponseBody>
 
     //Actualizar una empresa existente
-    @PUT("Empresa/{idEmpresa}")
-    fun updateEmpresa(@Path("idEmpresa") idEmpresa: Int, @Body empresa: EmpresaModel): Call<Void>
+    @PUT("Empresa/{id}")
+    fun updateEmpresa(@Body empresa: EmpresaModel, @Path("id") id: Int): Call<Void>
 
     //Eliminar una empresa
-    @DELETE("Empresa/{idEmpresa}")
+    @DELETE("Empresa/{id}")
     fun deleteEmpresa(@Path("id") id: Int): Call<Void>
 
-    // Planificacion
+    // ------------- VENTAS -------------
+    @GET("VentasProspecto")
+    fun getVentas(): Call<List<VentasModel>>
 
-    @GET("ContactoPersona")
-    fun getContactos(): Call<List<PlanificacionModel>>
+    @GET("VentasProspecto/{id}")
+    fun getVenta(@Path("id") id: Int): Call<VentasModel>
 
-    @POST("contactopersona")
-    fun createContacto(@Body ContactoPersona: PlanificacionModel): Call<PlanificacionModel>
+    @POST("VentasProspecto")
+    fun createVenta(@Body venta: VentasModel): Call<ResponseBody>
 
-    @PUT("contactopersona/{id}")
-    fun updateEmpresa(@Path("id") id: Int, @Body ContactoPersona: PlanificacionModel): Call<Void>
+    @PUT("VentasProspecto/{id}") // Ajusta a la ruta completa en el backend si `Venta` no es suficiente.
+    fun updateVenta(@Path("id") id: Int, @Body fields: Map<String, Int>): Call<ResponseBody>
 
-    @DELETE("contactopersona/{id}")
-    fun deleteContacto(@Path("id") id: Int): Call<Void>
+    @DELETE("VentasProspecto/{id}")
+    fun deleteVenta(@Path("id") id: Int): Call<Void>
 }

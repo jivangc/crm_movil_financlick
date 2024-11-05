@@ -24,7 +24,28 @@
             android:name=".ui.PlanificacionFormActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.SitioWebActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SolicitudesCampaniasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CampaniaFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CampanasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MarketingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.EmpresaFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.VentasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.VentaFormActivity"
             android:exported="false" />
         <activity
             android:name=".ui.PanificacionActivity"
