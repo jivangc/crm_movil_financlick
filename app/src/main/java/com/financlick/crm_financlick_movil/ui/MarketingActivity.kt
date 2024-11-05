@@ -25,11 +25,15 @@ class MarketingActivity : AppCompatActivity() {
         }
 
         cardModule2.setOnClickListener {
-            Toast.makeText(this, "Modulo en Construcción, Por Definir", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SolicitudesCampaniasActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         cardModule3.setOnClickListener {
-            Toast.makeText(this, "Modulo en Construcción, Por Definir", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SitioWebActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
