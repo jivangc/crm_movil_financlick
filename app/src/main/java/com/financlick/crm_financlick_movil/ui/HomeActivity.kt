@@ -27,12 +27,18 @@ class HomeActivity : AppCompatActivity() {
         val marketingButton = findViewById<ImageButton>(R.id.marketingButton)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val menuButton: ImageButton = findViewById(R.id.menuIcon)
+        //val ventasButton = findViewById<ImageButton>(R.id.perfilButton)
 
         Log.i("SESION", session.getUser().toString())
 
         menuButton.setOnClickListener {  // Set click listener on ImageButton
             drawerLayout.openDrawer(GravityCompat.START)
         }
+
+//        ventasButton.setOnClickListener(){
+//            val intent = Intent(this, VentasActivity::class.java)
+//            startActivity(intent)
+//        }
 
         button.setOnClickListener {
             showEmpresas()
