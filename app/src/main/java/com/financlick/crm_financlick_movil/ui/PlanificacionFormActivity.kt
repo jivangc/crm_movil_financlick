@@ -95,6 +95,12 @@ class PlanificacionFormActivity : AppCompatActivity() {
 
     }
 
+    private fun callCards() {
+        val intent = Intent(this, PanificacionActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 
 
     private fun llenarCampos(contacto: PlanificacionModel) {
@@ -135,7 +141,8 @@ class PlanificacionFormActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PlanificacionModel>, response: Response<PlanificacionModel>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@PlanificacionFormActivity, "Contacto guardado exitosamente", Toast.LENGTH_SHORT).show()
-                    finish()
+                    callCards()
+                    //finish()
                 } else {
                     Toast.makeText(this@PlanificacionFormActivity, "Error en la respuesta: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
