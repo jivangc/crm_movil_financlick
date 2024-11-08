@@ -141,6 +141,7 @@ class VentaFormActivity : AppCompatActivity() {
         val idVenta = ventaActual?.idVenta ?: return
         Log.d("VentaFormActivity", "ID de venta seleccionada: $idVenta")
 
+
         // Llamada a la API
         RetrofitClient.instance.updateVenta(idVenta, fields).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
