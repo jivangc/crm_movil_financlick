@@ -7,8 +7,6 @@ import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.config.SessionManager
@@ -59,10 +57,10 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, VentasActivity::class.java)
             startActivity(intent)
         }
-//        finanzasButton.setOnClickListener(){
-//            val intent = Intent(this, FinanzasActivity::class.java)
-//            startActivity(intent)
-//        }
+        finanzasButton.setOnClickListener(){
+            val intent = Intent(this, FinanzasActivity::class.java)
+            startActivity(intent)
+        }
         // ------- Navegacion ----------
     }
 

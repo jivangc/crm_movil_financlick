@@ -1,6 +1,7 @@
 package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.IngresoEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
@@ -89,4 +90,33 @@ interface ServiceApi {
 
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+    //IngresosEgresos
+
+    @GET("IngresosEgreso/ingresos")
+    fun getIngresos(): Call<List<IngresoEgresoModel>>
+
+    @GET("IngresosEgreso/egresos")
+    fun getEgresos(): Call<List<IngresoEgresoModel>>
+
+    @GET("IngresosEgreso/IngresosEgresosGetAll")
+    fun getIngresosEgresos(): Call<List<IngresoEgresoModel>>
+
+    @POST("IngresosEgreso/ingresos")
+    fun createIngreso(@Body IngresoEgreso: IngresoEgresoModel): Call<IngresoEgresoModel>
+
+    @POST("IngresosEgreso/egresos")
+    fun createEgreso(@Body IngresoEgreso: IngresoEgresoModel): Call<IngresoEgresoModel>
+
+    @PUT("IngresosEgreso/ingresos/{id}")
+    fun updateIngreso(@Path("id") id: Int, @Body IngresoEgreso: IngresoEgresoModel): Call<Void>
+
+    @PUT("IngresosEgreso/egresos/{id}")
+    fun updateEgreso(@Path("id") id: Int, @Body IngresoEgreso: IngresoEgresoModel): Call<Void>
+
+    @DELETE("IngresosEgreso/ingresos/{id}")
+    fun deleteIngreso(@Path("id") id: Int): Call<Void>
+
+    @DELETE("IngresosEgreso/egresos/{id}")
+    fun deleteEgreso(@Path("id") id: Int): Call<Void>
 }

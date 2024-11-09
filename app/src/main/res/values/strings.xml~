@@ -13,9 +13,4 @@
         <item>Resuelto</item>
         <item>Cerrado</item>
     </string-array>
-    <string-array name="categoria_array">
-        <item>Ingreso</item>
-        <item>Egreso</item>
-        <item>Otro</item>
-    </string-array>
 </resources>
