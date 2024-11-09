@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
@@ -77,7 +78,6 @@ interface ServiceApi {
     fun deleteVenta(@Path("id") id: Int): Call<Void>
 
     // Planificacion
-
     @GET("ContactoPersona")
     fun getContactos(): Call<List<PlanificacionModel>>
 
@@ -89,4 +89,27 @@ interface ServiceApi {
 
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+    // ------------- Campanias -------------
+    @GET("Campania")
+    fun getCampanias(): Call<List<CampaniaModel>>
+
+    @POST("Campania")
+    fun createCampania(@Body campania: CampaniaModel): Call<ResponseBody>
+
+    @GET("Campania/{id}")
+    fun getCampania(@Path("id") id: Int): Call<CampaniaModel>
+
+    @PUT("Campania/{id}")
+    fun updateCampania(@Path("id") id: Int, @Body campania: CampaniaModel): Call<ResponseBody>
+
+    @DELETE("Campania/{id}")
+    fun deleteCampania(@Path("id") id: Int): Call<Void>
+
+    @POST("Campania/{id}/sendMails")
+    fun sendMails(@Path("id") id: Int, @Body emailsBody: EmailsBody): Call<Void>
+
+    data class EmailsBody(
+        val emails: List<String>
+    )
 }

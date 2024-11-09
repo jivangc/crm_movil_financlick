@@ -2,6 +2,7 @@ package com.financlick.crm_financlick_movil.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,8 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.adapters.CardCampaniaAdapter
+import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardCampaniaItem
+import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import retrofit2.Callback
 import java.util.Date
 
 class CampanasActivity : AppCompatActivity() {
@@ -32,71 +36,63 @@ class CampanasActivity : AppCompatActivity() {
         floatingButton.setOnClickListener {
             val intent = Intent(this, CampaniaFormActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
-        val campaniasTest = listOf(
-            CardCampaniaItem(
-                idCampania = 1,
-                tipoCampania = "Publicitaria",
-                titulo = "Descubre nuestros productos",
-                descripcion = "Te presentamos nuestros productos",
-                dominioCampania = "www.financlick.com",
-                fechaInicio = Date(),
-                fechaFin = null,
-                contenido = "Aqui va el contenido de la campania",
-                adjunto = "",
-                status = "En progreso"
-            ),
-            CardCampaniaItem(
-                idCampania = 2,
-                tipoCampania = "Informativa",
-                titulo = "Novedades en la app",
-                descripcion = "Nuevas funcionalidades",
-                dominioCampania = "www.financlick.com/novedades",
-                fechaInicio = Date(),
-                fechaFin = null,
-                contenido = "Aqui va el contenido de la campania",
-                adjunto = "",
-                status = "En progreso"
-            ),
-            CardCampaniaItem(
-                idCampania = 3,
-                tipoCampania = "Publicitaria",
-                titulo = "Encuentra el mejor plan para ti",
-                descripcion = "Te presentamos nuestros planes",
-                dominioCampania = "www.financlick.com/planes",
-                fechaInicio = Date(),
-                fechaFin = null,
-                contenido = "Aqui va el contenido de la campania",
-                adjunto = "",
-                status = "En progreso"
-            ),
-            CardCampaniaItem(
-                idCampania = 4,
-                tipoCampania = "Informativa",
-                titulo = "Nuevas funcionalidades en la app",
-                descripcion = "Nuevas funcionalidades",
-                dominioCampania = "www.financlick.com/novedades",
-                fechaInicio = Date(),
-                fechaFin = null,
-                contenido = "Aqui va el contenido de la campania",
-                adjunto = "",
-                status = "En progreso"
-            ),
-            CardCampaniaItem(
-                idCampania = 5,
-                tipoCampania = "Publicitaria",
-                titulo = "Encuentra el mejor plan para ti",
-                descripcion = "Te presentamos nuestros planes",
-                dominioCampania = "www.financlick.com/planes",
-                fechaInicio = Date(),
-                fechaFin = null,
-                contenido = "Aqui va el contenido de la campania",
-                adjunto = "",
-                status = "En progreso"
-            )
-        )
+        this.getCampanias { campanias ->
+            adapter.updateItems(campanias)
+        }
+    }
 
-        adapter.updateItems(campaniasTest)
+    private fun getCampanias(onComplete: (List<CardCampaniaItem>) -> Unit) {
+        RetrofitClient.instance.getCampanias().enqueue(object: Callback<List<CampaniaModel>> {
+            override fun onResponse(call: retrofit2.Call<List<CampaniaModel>>, response: retrofit2.Response<List<CampaniaModel>>) {
+                if (response.isSuccessful) {
+                    val campanias = response.body() ?: emptyList()
+                    if (campanias.isNotEmpty()){
+                        val cardCampanias = campanias.map { campania ->
+                            CardCampaniaItem(
+                                idCampania = campania.idCampania,
+                                nombre = campania.nombre,
+                                asunto = campania.asunto,
+                                contenido = campania.contenido,
+                                createdDate = campania.createdDate,
+                                scheduleDate = campania.scheduleDate,
+                                tipo = campania.tipo,
+                                estatus = campania.estatus,
+                                destinatarios = campania.destinatarios,
+                                idEmpresa = campania.idEmpresa,
+                            )
+                        }
+                        onComplete(cardCampanias)
+                    }else{
+                        onComplete(emptyList())
+                    }
+                }else{
+                    onComplete(emptyList())
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<List<CampaniaModel>>, t: Throwable) {
+                Log.d("Error", t.message.toString())
+                onComplete(emptyList())
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Inicialmente, configura un adaptador vacío
+        val adapter = CardCampaniaAdapter(emptyList())
+        recyclerView.adapter = adapter
+
+        // Obtener documentos y detalles
+        getCampanias { items ->
+            // Actualizar la lista de datos y el adaptador
+            adapter.updateItems(items)
+        }
     }
 }
