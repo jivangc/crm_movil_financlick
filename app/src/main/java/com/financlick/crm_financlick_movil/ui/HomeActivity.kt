@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
         planificacionButton.setOnClickListener(){
-            val intent = Intent(this, PanificacionActivity::class.java)
+            val intent = Intent(this, PlanificacionesPrincipal::class.java)
             startActivity(intent)
         }
         ventasButton.setOnClickListener(){

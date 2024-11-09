@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.ActividadModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
@@ -89,4 +90,25 @@ interface ServiceApi {
 
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+
+    //Actividades
+
+    @GET("actividad")
+    fun getActividades(): Call<List<ActividadModel>>
+
+    @GET("actividad/{id}")
+    fun getActividad(@Path("id") id: Int): Call<ActividadModel>
+
+    @GET("actividad/usuario/{idUsuario}")
+    fun getActividadesByUsuario(@Path("idUsuario") idUsuario: Int): Call<List<ActividadModel>>
+
+    @POST("actividad")
+    fun createActividad(@Body actividad: ActividadModel): Call<ActividadModel>
+
+    @PUT("actividad/{id}")
+    fun updateActividad(@Path("id") id: Int, @Body actividad: ActividadModel): Call<Void>
+
+    @DELETE("actividad/{id}")
+    fun deleteActividad(@Path("id") id: Int): Call<Void>
 }
