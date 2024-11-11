@@ -1,7 +1,10 @@
 package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.IngresoEgresoRequest
+import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
+import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.financlick.crm_financlick_movil.models.QuejaRequestModel
@@ -70,7 +73,7 @@ interface ServiceApi {
     @POST("VentasProspecto")
     fun createVenta(@Body venta: VentasModel): Call<ResponseBody>
 
-    @PUT("VentasProspecto/{id}") // Ajusta a la ruta completa en el backend si `Venta` no es suficiente.
+    @PUT("VentasProspecto/{id}")
     fun updateVenta(@Path("id") id: Int, @Body fields: Map<String, Int>): Call<ResponseBody>
 
     @DELETE("VentasProspecto/{id}")
@@ -89,4 +92,15 @@ interface ServiceApi {
 
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+    // INGRESOS Y EGRESOS
+    @GET("IngresosEgreso")
+    fun getIngresosEgresos(): Call<List<IngresosEgresoModel>>
+
+    @POST("IngresosEgreso/ingresos")
+    fun crearIngreso(@Body request: IngresosEgresoModel): Call<IngresosEgresoModel>
+
+    // ServiceApi.kt
+    @GET("PlanEmpresa/{idPlan}")
+    fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
 }
