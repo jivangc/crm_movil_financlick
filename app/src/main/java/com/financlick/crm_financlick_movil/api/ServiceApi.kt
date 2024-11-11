@@ -97,6 +97,9 @@ interface ServiceApi {
     @GET("IngresosEgreso")
     fun getIngresosEgresos(): Call<List<IngresosEgresoModel>>
 
+    @GET("IngresosEgreso/ingresos")
+    fun getIngresos(): Call<List<IngresosEgresoModel>>
+
     @POST("IngresosEgreso/ingresos")
     fun crearIngreso(@Body request: IngresosEgresoModel): Call<IngresosEgresoModel>
 

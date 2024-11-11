@@ -219,37 +219,40 @@
                     android:stretchColumns="1">
 
                     <!-- Encabezado de la tabla -->
-                    <TableRow>
+                    <TableRow
+                        android:gravity="center_horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="ID"
-                            android:textColor="#757575"
+                            android:text="Fecha"
+                            android:textColor="#000000"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:gravity="center" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
                             android:text="Monto"
-                            android:textColor="#757575"
+                            android:textColor="#000000"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:gravity="center" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="Estado"
-                            android:textColor="#757575"
+                            android:text="Categoría"
+                            android:textColor="#000000"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:gravity="center" />
                     </TableRow>
-
                 </TableLayout>
-
 
                 <Button
                     android:id="@+id/btnVerSolicitudes"
