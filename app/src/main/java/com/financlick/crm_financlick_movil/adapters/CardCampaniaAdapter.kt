@@ -27,15 +27,19 @@ class CardCampaniaAdapter (private var items: List<CardCampaniaItem>): RecyclerV
         val campaniaItem = items[position]
 
         // Configura los datos de la tarjeta
-        holder.tipoView.text = campaniaItem.tipoCampania
-        holder.descriptionView.text = campaniaItem.dominioCampania
-        holder.statusView.text = campaniaItem.status
+        holder.tipoView.text = campaniaItem.tipo
+        holder.descriptionView.text = campaniaItem.asunto
+        when (campaniaItem.estatus) {
+            1 -> holder.statusView.text = "Pendiente"
+            2 -> holder.statusView.text = "Enviado"
+            3 -> holder.statusView.text = "Cerrado"
+            4 -> holder.statusView.text = "Enviado Parcial"
+        }
 
         // Configura el botón
         holder.buttonView.setOnClickListener {
             val intent = Intent(holder.itemView.context, CampaniaFormActivity::class.java)
             intent.putExtra("campania", Gson().toJson(campaniaItem))
-            Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
             holder.itemView.context.startActivity(intent)
         }
     }

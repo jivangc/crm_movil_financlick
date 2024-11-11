@@ -1,7 +1,7 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
-import com.financlick.crm_financlick_movil.models.IngresoEgresoRequest
 import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
@@ -73,7 +73,7 @@ interface ServiceApi {
     @POST("VentasProspecto")
     fun createVenta(@Body venta: VentasModel): Call<ResponseBody>
 
-    @PUT("VentasProspecto/{id}")
+    @PUT("VentasProspecto/{id}") // Ajusta a la ruta completa en el backend si `Venta` no es suficiente.
     fun updateVenta(@Path("id") id: Int, @Body fields: Map<String, Int>): Call<ResponseBody>
 
     @DELETE("VentasProspecto/{id}")
@@ -103,4 +103,27 @@ interface ServiceApi {
     // ServiceApi.kt
     @GET("PlanEmpresa/{idPlan}")
     fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
+
+    // ------------- Campanias -------------
+    @GET("Campania")
+    fun getCampanias(): Call<List<CampaniaModel>>
+
+    @POST("Campania")
+    fun createCampania(@Body campania: CampaniaModel): Call<ResponseBody>
+
+    @GET("Campania/{id}")
+    fun getCampania(@Path("id") id: Int): Call<CampaniaModel>
+
+    @PUT("Campania/{id}")
+    fun updateCampania(@Path("id") id: Int, @Body campania: CampaniaModel): Call<ResponseBody>
+
+    @DELETE("Campania/{id}")
+    fun deleteCampania(@Path("id") id: Int): Call<Void>
+
+    @POST("Campania/{id}/sendMails")
+    fun sendMails(@Path("id") id: Int, @Body emailsBody: EmailsBody): Call<Void>
+
+    data class EmailsBody(
+        val emails: List<String>
+    )
 }
