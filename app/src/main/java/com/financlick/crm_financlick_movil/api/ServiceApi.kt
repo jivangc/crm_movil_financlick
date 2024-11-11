@@ -1,8 +1,13 @@
 package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.IngresoEgresoRequest
+import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
+import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
+import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
+import com.financlick.crm_financlick_movil.models.QuejaRequestModel
 import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.financlick.crm_financlick_movil.models.VentasModel
 import okhttp3.ResponseBody
@@ -31,7 +36,7 @@ interface ServiceApi {
 
     // Crear una nueva queja
     @POST("QuejaSugerencium")
-    fun createQueja(@Body queja: QuejaModel): Call<ResponseBody>
+    fun createQueja(@Body queja: QuejaRequestModel): Call<ResponseBody>
 
     // Actualizar una queja existente
     @PUT("QuejaSugerencium/{id}")
@@ -48,14 +53,14 @@ interface ServiceApi {
 
     //Crear una nueva empresa
     @POST("Empresa")
-    fun createEmpresa(@Body empresa: EmpresaModel): Call<EmpresaModel>
+    fun createEmpresa(@Body empresa: EmpresaModel): Call<ResponseBody>
 
     //Actualizar una empresa existente
-    @PUT("Empresa/{idEmpresa}")
-    fun updateEmpresa(@Path("idEmpresa") idEmpresa: Int, @Body empresa: EmpresaModel): Call<Void>
+    @PUT("Empresa/{id}")
+    fun updateEmpresa(@Body empresa: EmpresaModel, @Path("id") id: Int): Call<Void>
 
     //Eliminar una empresa
-    @DELETE("Empresa/{idEmpresa}")
+    @DELETE("Empresa/{id}")
     fun deleteEmpresa(@Path("id") id: Int): Call<Void>
 
     // ------------- VENTAS -------------
@@ -68,9 +73,34 @@ interface ServiceApi {
     @POST("VentasProspecto")
     fun createVenta(@Body venta: VentasModel): Call<ResponseBody>
 
-    @PUT("VentasProspecto/{id}") // Ajusta a la ruta completa en el backend si `Venta` no es suficiente.
+    @PUT("VentasProspecto/{id}")
     fun updateVenta(@Path("id") id: Int, @Body fields: Map<String, Int>): Call<ResponseBody>
 
     @DELETE("VentasProspecto/{id}")
     fun deleteVenta(@Path("id") id: Int): Call<Void>
+
+    // Planificacion
+
+    @GET("ContactoPersona")
+    fun getContactos(): Call<List<PlanificacionModel>>
+
+    @POST("contactopersona")
+    fun createContacto(@Body ContactoPersona: PlanificacionModel): Call<PlanificacionModel>
+
+    @PUT("contactopersona/{id}")
+    fun updateContacto(@Path("id") id: Int, @Body ContactoPersona: PlanificacionModel): Call<Void>
+
+    @DELETE("contactopersona/{id}")
+    fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+    // INGRESOS Y EGRESOS
+    @GET("IngresosEgreso")
+    fun getIngresosEgresos(): Call<List<IngresosEgresoModel>>
+
+    @POST("IngresosEgreso/ingresos")
+    fun crearIngreso(@Body request: IngresosEgresoModel): Call<IngresosEgresoModel>
+
+    // ServiceApi.kt
+    @GET("PlanEmpresa/{idPlan}")
+    fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
 }

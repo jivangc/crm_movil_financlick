@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="45dp"
                         android:layout_weight="1"
-                        android:text="Null"
+                        android:text="Usuario"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:gravity="center" />
@@ -88,7 +88,7 @@
                         android:layout_height="70dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Solicitar"
-                        android:src="@drawable/plus_"
+                        android:src="@drawable/quejas"
                         android:scaleType="fitCenter" />
 
                     <TextView
@@ -114,7 +114,7 @@
                         android:layout_height="70dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Mis Documentos"
-                        android:src="@drawable/docs_"
+                        android:src="@drawable/empresas"
                         android:scaleType="fitCenter" />
 
                     <TextView
@@ -136,19 +136,19 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/perfilButton"
+                        android:id="@+id/marketingButton"
                         android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Perfil"
-                        android:src="@drawable/perfil_"
+                        android:src="@drawable/marketing"
                         android:scaleType="fitCenter" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Ventas"
+                        android:text="Marketing"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
@@ -168,7 +168,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Credito Aprobado:"
+                    android:text="Empresas registradas:"
                     android:textColor="#757575"
                     android:textSize="16sp" />
 
@@ -177,8 +177,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginLeft="220dp"
-                    android:text="$ -,---.--"
+                    android:layout_marginLeft="150dp"
+                    android:text="N Empresas"
                     android:textColor="#000000"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -186,8 +186,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="270dp"
-                    android:text="Disponible"
+                    android:layout_marginLeft="200dp"
+                    android:text="Activas"
                     android:textColor="#757575"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -206,7 +206,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solicitudes:"
+                    android:text="Finanzas:"
                     android:textColor="#757575"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -283,8 +283,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/pagina_de_inicio"
                         android:tint="#1E88E5" />
@@ -297,14 +298,15 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btnRequests"
+                        android:id="@+id/btnPlanificacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/solicitudes"
+                        android:src="@drawable/planificacion"
                         android:tint="#1E88E5" />
 
                 </FrameLayout>
@@ -315,14 +317,34 @@
                     android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/btnNotifications"
+                        android:id="@+id/btnVentas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleX="0.45"
-                        android:scaleY="0.45"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/notificaciones"
+                        android:src="@drawable/ventas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnFinanzas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/finanzas"
                         android:tint="#1E88E5" />
 
                 </FrameLayout>
@@ -334,12 +356,11 @@
     </FrameLayout>
 
     <!-- Menú lateral -->
-    <!--
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
-        app:menu="@menu/drawer_menu" />-->
+        app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

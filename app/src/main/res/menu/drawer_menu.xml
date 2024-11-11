@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/nav_profile"
+        android:title="Empresas" />
+    <item
+        android:id="@+id/nav_plan"
+        android:title="Planificación" />
+    <item
+        android:id="@+id/nav_marketing"
+        android:title="Marketing" />
+    <item
+        android:id="@+id/nav_sales"
+        android:title="Ventas" />
+    <item
+        android:id="@+id/nav_finance"
+        android:title="Finanzas" />
+    <item
+        android:id="@+id/nav_quejas"
+        android:title="Quejas y Sugerencias" />
+    <item
+        android:id="@+id/logout"
+        android:title="Cerrar Sesion" />
+</menu>
