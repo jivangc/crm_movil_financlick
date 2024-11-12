@@ -16,7 +16,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.Serializable
 
 class VentasActivity : AppCompatActivity() {
     private lateinit var floatingButton: FloatingActionButton
@@ -33,25 +32,27 @@ class VentasActivity : AppCompatActivity() {
         adapter = CardVentaAdapter(emptyList()) { venta -> onVentaSelected(venta) }
         recyclerView.adapter = adapter
 
-        // Cargar las ventas
-        getVentas { ventas ->
-            adapter.updateItems(ventas)
-        }
-
         // Configurar FloatingActionButton
         floatingButton = findViewById(R.id.addVenta)
         floatingButton.setOnClickListener {
-            // Abrir `VentaFormActivity` sin una venta específica (puedes ajustar esto si tienes otro flujo en mente)
-            val intent = Intent(this, VentaFormActivity::class.java)
+            val intent = Intent(this, GenerarVenta::class.java)
             startActivity(intent)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Recargar las ventas pendientes cada vez que la actividad esté en primer plano
+        getVentasPendientes { ventas ->
+            adapter.updateItems(ventas)
+        }
+    }
+
     /**
-     * Método para obtener ventas y actualizar el RecyclerView.
+     * Método para obtener ventas pendientes y actualizar el RecyclerView.
      */
-    private fun getVentas(onComplete: (List<CardVentaItem>) -> Unit) {
-        RetrofitClient.instance.getVentas().enqueue(object : Callback<List<VentasModel>> {
+    private fun getVentasPendientes(onComplete: (List<CardVentaItem>) -> Unit) {
+        RetrofitClient.instance.getVentasPendientes().enqueue(object : Callback<List<VentasModel>> {
             override fun onResponse(call: Call<List<VentasModel>>, response: Response<List<VentasModel>>) {
                 if (response.isSuccessful) {
                     val ventas = response.body() ?: emptyList()
@@ -78,17 +79,21 @@ class VentasActivity : AppCompatActivity() {
                         }
                         onComplete(cardVentas)
                     } else {
-                        Toast.makeText(this@VentasActivity, "No se encontraron ventas.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@VentasActivity, "No se encontraron ventas pendientes.", Toast.LENGTH_SHORT).show()
                         onComplete(emptyList())
                     }
                 } else {
-                    Toast.makeText(this@VentasActivity, "Error al obtener ventas: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Log.e("VentasActivity", "Error al obtener ventas pendientes: Código de respuesta ${response.code()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("VentasActivity", "Cuerpo del error: $errorBody")
+                    Toast.makeText(this@VentasActivity, "Error al obtener ventas pendientes: ${response.code()}", Toast.LENGTH_SHORT).show()
                     onComplete(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<List<VentasModel>>, t: Throwable) {
                 Log.e("VentasActivity", "Error en la solicitud: ${t.message}")
+                t.printStackTrace() // Log completo del error
                 Toast.makeText(this@VentasActivity, "Error en la solicitud: ${t.message}", Toast.LENGTH_SHORT).show()
                 onComplete(emptyList())
             }
@@ -103,4 +108,7 @@ class VentasActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    companion object {
+        const val REQUEST_CODE_GENERAR_VENTA = 1
+    }
 }

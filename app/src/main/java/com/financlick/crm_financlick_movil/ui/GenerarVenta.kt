@@ -166,11 +166,14 @@ class GenerarVenta : AppCompatActivity() {
     }
 
     private fun guardarIngreso(ingreso: IngresosEgresoModel) {
-        // Realizar la solicitud a la API
-        RetrofitClient.instance.crearIngreso(ingreso).enqueue(object : Callback<IngresosEgresoModel> {
+        val idVentaProspecto = ventaProspecto.idVenta
+
+        RetrofitClient.instance.crearIngreso(ingreso, idVentaProspecto).enqueue(object : Callback<IngresosEgresoModel> {
             override fun onResponse(call: Call<IngresosEgresoModel>, response: Response<IngresosEgresoModel>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@GenerarVenta, "Ingreso guardado correctamente", Toast.LENGTH_SHORT).show()
+
+                    setResult(RESULT_OK)
                     finish()
                 } else {
                     val errorBody = response.errorBody()?.string()

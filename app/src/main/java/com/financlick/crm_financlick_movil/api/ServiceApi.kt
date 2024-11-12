@@ -67,6 +67,9 @@ interface ServiceApi {
     @GET("VentasProspecto")
     fun getVentas(): Call<List<VentasModel>>
 
+    @GET("VentasProspecto")
+    fun getVentasSinIngresos(): Call<List<VentasModel>>
+
     @GET("VentasProspecto/{id}")
     fun getVenta(@Path("id") id: Int): Call<VentasModel>
 
@@ -78,6 +81,9 @@ interface ServiceApi {
 
     @DELETE("VentasProspecto/{id}")
     fun deleteVenta(@Path("id") id: Int): Call<Void>
+
+    @GET("VentasProspecto/pendientes")
+    fun getVentasPendientes(): Call<List<VentasModel>>
 
     // Planificacion
 
@@ -101,7 +107,10 @@ interface ServiceApi {
     fun getIngresos(): Call<List<IngresosEgresoModel>>
 
     @POST("IngresosEgreso/ingresos")
-    fun crearIngreso(@Body request: IngresosEgresoModel): Call<IngresosEgresoModel>
+    fun crearIngreso(
+        @Body request: IngresosEgresoModel,
+        @Query("idVentaProspecto") idVentaProspecto: Int
+    ): Call<IngresosEgresoModel>
 
     // ServiceApi.kt
     @GET("PlanEmpresa/{idPlan}")
