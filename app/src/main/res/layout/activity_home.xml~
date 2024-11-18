@@ -148,11 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-<<<<<<< HEAD
                         android:text="Marketing"
-=======
-                        android:text="Ventas"
->>>>>>> paulo
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
@@ -267,6 +263,15 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
             <!-- Bottom Navigation -->
             <LinearLayout
                 android:id="@+id/bottomNavigation"
