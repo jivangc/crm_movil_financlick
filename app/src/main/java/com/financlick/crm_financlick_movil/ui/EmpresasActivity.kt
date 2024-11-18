@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.adapters.CardEmpresaAdapter
+import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardEmpresasItem
 import com.financlick.crm_financlick_movil.models.EmpresaModel
@@ -101,6 +102,22 @@ class EmpresasActivity : AppCompatActivity() {
                 onComplete(emptyList())
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Inicialmente, configura un adaptador vacío
+        val adapter = CardEmpresaAdapter(emptyList())
+        recyclerView.adapter = adapter
+
+        // Obtener documentos y detalles
+        getEmpresas { items ->
+            // Actualizar la lista de datos y el adaptador
+            adapter.updateItems(items)
+        }
     }
 }
 

@@ -4,14 +4,13 @@ import java.util.Date
 
 data class CardCampaniaItem (
     val idCampania: Int,
-    val tipoCampania: String,
-    val titulo: String,
-    val descripcion: String,
-    val dominioCampania: String,
-    val fechaInicio: Date,
-    val fechaFin: Date?,
+    val nombre: String,
+    val asunto: String,
     val contenido: String,
-    val adjunto: String,
-    val status: String,
-){
-}
+    val createdDate: String,
+    val scheduleDate: String,
+    val tipo: String,
+    val estatus: Int,
+    val destinatarios: String,
+    val idEmpresa: Int,
+) { }

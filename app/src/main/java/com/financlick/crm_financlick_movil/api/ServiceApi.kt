@@ -1,8 +1,11 @@
 package com.financlick.crm_financlick_movil.api
 
+import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.financlick.crm_financlick_movil.models.ActividadModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
+import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.financlick.crm_financlick_movil.models.QuejaRequestModel
@@ -65,6 +68,9 @@ interface ServiceApi {
     @GET("VentasProspecto")
     fun getVentas(): Call<List<VentasModel>>
 
+    @GET("VentasProspecto")
+    fun getVentasSinIngresos(): Call<List<VentasModel>>
+
     @GET("VentasProspecto/{id}")
     fun getVenta(@Path("id") id: Int): Call<VentasModel>
 
@@ -76,6 +82,9 @@ interface ServiceApi {
 
     @DELETE("VentasProspecto/{id}")
     fun deleteVenta(@Path("id") id: Int): Call<Void>
+
+    @GET("VentasProspecto/pendientes")
+    fun getVentasPendientes(): Call<List<VentasModel>>
 
     // Planificacion
 
@@ -90,6 +99,46 @@ interface ServiceApi {
 
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
+
+    // INGRESOS Y EGRESOS
+    @GET("IngresosEgreso")
+    fun getIngresosEgresos(): Call<List<IngresosEgresoModel>>
+
+    @GET("IngresosEgreso/ingresos")
+    fun getIngresos(): Call<List<IngresosEgresoModel>>
+
+    @POST("IngresosEgreso/ingresos")
+    fun crearIngreso(
+        @Body request: IngresosEgresoModel,
+        @Query("idVentaProspecto") idVentaProspecto: Int
+    ): Call<IngresosEgresoModel>
+
+    // ServiceApi.kt
+    @GET("PlanEmpresa/{idPlan}")
+    fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
+
+    // ------------- Campanias -------------
+    @GET("Campania")
+    fun getCampanias(): Call<List<CampaniaModel>>
+
+    @POST("Campania")
+    fun createCampania(@Body campania: CampaniaModel): Call<ResponseBody>
+
+    @GET("Campania/{id}")
+    fun getCampania(@Path("id") id: Int): Call<CampaniaModel>
+
+    @PUT("Campania/{id}")
+    fun updateCampania(@Path("id") id: Int, @Body campania: CampaniaModel): Call<ResponseBody>
+
+    @DELETE("Campania/{id}")
+    fun deleteCampania(@Path("id") id: Int): Call<Void>
+
+    @POST("Campania/{id}/sendMails")
+    fun sendMails(@Path("id") id: Int, @Body emailsBody: EmailsBody): Call<Void>
+
+    data class EmailsBody(
+        val emails: List<String>
+    )
 
 
     //Actividades

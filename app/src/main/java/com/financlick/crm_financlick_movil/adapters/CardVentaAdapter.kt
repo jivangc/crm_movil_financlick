@@ -1,5 +1,6 @@
 package com.financlick.crm_financlick_movil.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.items.CardVentaItem
+import com.financlick.crm_financlick_movil.ui.GenerarVenta
 
 class CardVentaAdapter(
     private var items: List<CardVentaItem>,
@@ -23,13 +25,18 @@ class CardVentaAdapter(
     override fun onBindViewHolder(holder: CardVentaViewHolder, position: Int) {
         val ventaItem = items[position]
 
-        // Configura los datos de la tarjeta
         holder.titleView.text = ventaItem.nombreEmpresa
         holder.descriptionView.text = ventaItem.nombreCliente
 
-        // Configura el botón para manejar el clic mediante el callback
         holder.buttonView.setOnClickListener {
             onVentaClick(ventaItem)
+        }
+
+        holder.buttonGenerarVenta.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, GenerarVenta::class.java)
+            intent.putExtra("VENTA_PROSPECTO", ventaItem)
+            context.startActivity(intent)
         }
     }
 
@@ -44,5 +51,6 @@ class CardVentaAdapter(
         val titleView: TextView = view.findViewById(R.id.cardTitle)
         val descriptionView: TextView = view.findViewById(R.id.cardDescription)
         val buttonView: Button = view.findViewById(R.id.cardButton)
+        val buttonGenerarVenta: Button = view.findViewById(R.id.cardButtonGenerate)
     }
 }

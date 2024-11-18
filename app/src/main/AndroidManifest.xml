@@ -28,6 +28,9 @@
             android:name=".ui.PlanificacionesPrincipal"
             android:exported="false" />
         <activity
+            android:name=".ui.GenerarVenta"
+            android:exported="false" />
+        <activity
             android:name=".ui.PlanificacionFormActivity"
             android:exported="false" />
         <activity

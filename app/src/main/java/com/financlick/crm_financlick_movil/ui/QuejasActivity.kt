@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
+import com.financlick.crm_financlick_movil.adapters.CardCampaniaAdapter
 import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardQuejaItem
@@ -76,12 +77,25 @@ class QuejasActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<QuejaModel>>, t: Throwable) {
-                // Manejar la falla de la llamada, por ejemplo, mostrar un mensaje de error
-                Log.e("PAULOOOOOO", t.toString())
                 onComplete(emptyList())
             }
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Inicialmente, configura un adaptador vacío
+        val adapter = CardQuejaAdapter(emptyList())
+        recyclerView.adapter = adapter
+
+        // Obtener documentos y detalles
+        getQuejas { items ->
+            // Actualizar la lista de datos y el adaptador
+            adapter.updateItems(items)
+        }
+    }
 
 }
