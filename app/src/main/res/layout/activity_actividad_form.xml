@@ -41,9 +41,10 @@
 
                     <ImageButton
                         android:id="@+id/backIcon"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="TODO"
                         android:src="@drawable/back"
                         android:scaleType="fitCenter" />
 
@@ -128,13 +129,14 @@
                         android:layout_height="wrap_content"
                         android:text="Estatus"
                         app:layout_constraintTop_toBottomOf="@id/descripcionLayout"
-                        android:layout_marginTop="16dp" />
+                        android:layout_marginTop="16dp"
+                        tools:ignore="MissingConstraints" />
 
                     <Spinner
                         android:id="@+id/estatusSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/estatus_array"
+                        android:layout_height="48dp"
+                        android:entries="@array/estatus_array_actividad"
                         app:layout_constraintTop_toBottomOf="@id/estatusLabel"
                         android:layout_marginTop="8dp" />
 
@@ -221,6 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:contentDescription="TODO"
                         android:scaleX="0.45"
                         android:scaleY="0.45"
                         android:background="?attr/selectableItemBackgroundBorderless"
@@ -239,6 +242,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:contentDescription="TODO"
                         android:scaleX="0.45"
                         android:scaleY="0.45"
                         android:background="?attr/selectableItemBackgroundBorderless"
@@ -257,6 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:contentDescription="TODO"
                         android:scaleX="0.45"
                         android:scaleY="0.45"
                         android:background="?attr/selectableItemBackgroundBorderless"

@@ -263,6 +263,24 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <!-- Card para el gráfico de barras -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/barChartCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/requestsInfoCard"
+                android:layout_margin="16dp"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                app:cardCornerRadius="8dp"
+                android:padding="16dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </androidx.cardview.widget.CardView>
+
             <!-- Bottom Navigation -->
             <LinearLayout
                 android:id="@+id/bottomNavigation"

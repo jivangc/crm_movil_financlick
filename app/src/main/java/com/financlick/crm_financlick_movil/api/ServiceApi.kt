@@ -104,10 +104,10 @@ interface ServiceApi {
     fun getActividadesByUsuario(@Path("idUsuario") idUsuario: Int): Call<List<ActividadModel>>
 
     @POST("actividad")
-    fun createActividad(@Body actividad: ActividadModel): Call<ActividadModel>
+    fun createActividad(@Body Actividad: ActividadModel): Call<ActividadModel>
 
     @PUT("actividad/{id}")
-    fun updateActividad(@Path("id") id: Int, @Body actividad: ActividadModel): Call<Void>
+    fun updateActividad(@Path("id") id: Int, @Body Actividad: ActividadModel): Call<Void>
 
     @DELETE("actividad/{id}")
     fun deleteActividad(@Path("id") id: Int): Call<Void>

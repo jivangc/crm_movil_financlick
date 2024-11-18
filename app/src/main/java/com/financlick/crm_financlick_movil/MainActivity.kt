@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
 
         // Inicializa las vistas
-        contrasenaInputLayout = findViewById(R.id.passwordInputLayout)
-        emailInputLayout = findViewById(R.id.emailInputLayout)
+        //contrasenaInputLayout = findViewById(R.id.passwordInputLayout)
+        //emailInputLayout = findViewById(R.id.emailInputLayout)
         contrasenaInput = findViewById(R.id.passwordEditText)
         emailInput = findViewById(R.id.usernameEditText)
 
@@ -59,16 +59,14 @@ class MainActivity : AppCompatActivity() {
     fun formValido() : Boolean {
         var valido = true
         if(contrasenaInput.text.toString().isEmpty()){
-            contrasenaInputLayout.error = "Campo obligatorio"
+            //contrasenaInputLayout.error = "Campo obligatorio"
             valido = false
-        } else {
-            contrasenaInputLayout.error = ""
         }
         if(emailInput.text.toString().isEmpty()){
-            emailInputLayout.error = "Campo obligatorio"
+            //emailInputLayout.error = "Campo obligatorio"
             valido = false
         } else {
-            emailInputLayout.error = ""
+            //emailInputLayout.error = ""
         }
         return valido
     }

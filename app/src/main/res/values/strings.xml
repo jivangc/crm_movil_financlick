@@ -13,4 +13,10 @@
         <item>Resuelto</item>
         <item>Cerrado</item>
     </string-array>
+
+    <string-array name="estatus_array_actividad">
+        <item>Pendiente</item>
+        <item>En Progreso</item>
+        <item>Completado</item>
+    </string-array>
 </resources>

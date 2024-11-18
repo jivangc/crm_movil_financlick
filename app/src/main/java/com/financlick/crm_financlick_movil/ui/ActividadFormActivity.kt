@@ -2,6 +2,7 @@ package com.financlick.crm_financlick_movil.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.financlick.crm_financlick_movil.R
@@ -20,6 +21,7 @@ class ActividadFormActivity : AppCompatActivity() {
     private lateinit var descripcionInput: TextInputEditText
     private lateinit var fechaCreacionInput: TextInputEditText
     private lateinit var responsableInput: TextInputEditText
+    private lateinit var estatus: Spinner
     private lateinit var btnGuardar: MaterialButton
     private lateinit var btnCancelar: MaterialButton
     private var actividad: ActividadModel? = null
@@ -31,9 +33,10 @@ class ActividadFormActivity : AppCompatActivity() {
         // Inicializar vistas
         nombreInput = findViewById(R.id.nombreInput)
         descripcionInput = findViewById(R.id.descripcionInput)
-        fechaCreacionInput = findViewById(R.id.fechaCreacionInput)
+        //fechaCreacionInput = findViewById(R.id.fechaCreacionInput)
         responsableInput = findViewById(R.id.responsableInput)
         btnGuardar = findViewById(R.id.btnGuardar)
+        estatus = findViewById(R.id.estatusSpinner)
         btnCancelar = findViewById(R.id.btnCancelar)
 
         // Cargar actividad desde el Intent si existe
@@ -48,10 +51,12 @@ class ActividadFormActivity : AppCompatActivity() {
 
         // Configurar el botón de guardar
         btnGuardar.setOnClickListener {
-            val actividadRequest = cargarActividadRequest()
+            var actividadRequest = cargarActividadRequest()
             if (actividad == null) {
+                //actividadRequest.estatus = ""
                 guardarActividad(actividadRequest)
             } else {
+                //actividadRequest.estatus = ""
                 actualizarActividad(actividadRequest)
             }
         }
@@ -84,7 +89,7 @@ class ActividadFormActivity : AppCompatActivity() {
             idUsuario = responsableInput.text.toString().toIntOrNull() ?: 0,
             nombre = nombreInput.text.toString(),
             descripcion = descripcionInput.text.toString(),
-            estatus = actividad?.estatus
+            estatus = "Pendiente"
 
         )
     }
