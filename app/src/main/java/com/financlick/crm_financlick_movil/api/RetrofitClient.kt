@@ -5,13 +5,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    //private const val BASE_URL = "https://192.168.137.1:5000/api/"
+    private const val BASE_URL = "https://192.168.137.1:5000/api/"
     //private const val BASE_URL = "https://financlick.somee.com/api/"
     //private const val BASE_URL = "https://192.168.137.1:5000/api/"
     //private const val BASE_URL = "https://financlick.somee.com/api/"
     // REMOTE CONTROL LOCALHOST
     //private const val BASE_URL = "http://10.0.2.2:5000/api/"
-    private const val BASE_URL = "https://192.168.1.6:5000/api/"
+    //private const val BASE_URL = "https://192.168.1.6:5000/api/"
 
     private var token: String? = null
 
