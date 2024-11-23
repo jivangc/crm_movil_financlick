@@ -18,5 +18,6 @@
         <item>Pendiente</item>
         <item>En Progreso</item>
         <item>Completado</item>
+        <item>Cerrado</item>
     </string-array>
 </resources>

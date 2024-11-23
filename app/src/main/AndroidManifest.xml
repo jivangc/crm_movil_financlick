@@ -19,6 +19,18 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.DocumentosEmpresaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActividadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActividadFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PlanificacionesPrincipal"
+            android:exported="false" />
+        <activity
             android:name=".ui.GenerarVenta"
             android:exported="false" />
         <activity
