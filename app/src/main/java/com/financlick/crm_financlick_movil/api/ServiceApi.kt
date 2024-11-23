@@ -117,6 +117,21 @@ interface ServiceApi {
         @Query("idVentaProspecto") idVentaProspecto: Int
     ): Call<IngresosEgresoModel>
 
+    @PUT("IngresosEgreso/egresos/{id}")
+    fun actualizarEgreso(
+        @Path("id") id: Int,
+        @Body request: IngresosEgresoModel
+    ): Call<Void>
+
+    @GET("IngresosEgreso/egresos")
+    fun getEgresos(): Call<List<IngresosEgresoModel>>
+
+    // Añadir egresos
+    @POST("IngresosEgreso/egresos")
+    fun crearEgreso(
+        @Body request: IngresosEgresoModel
+    ): Call<IngresosEgresoModel>
+
     // ServiceApi.kt
     @GET("PlanEmpresa/{idPlan}")
     fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
