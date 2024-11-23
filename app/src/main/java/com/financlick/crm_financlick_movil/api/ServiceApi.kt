@@ -2,6 +2,8 @@ package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.financlick.crm_financlick_movil.models.ActividadModel
+import com.financlick.crm_financlick_movil.models.DocumentoBase64Model
+import com.financlick.crm_financlick_movil.models.DocumentoEmpresaModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
@@ -11,6 +13,8 @@ import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.financlick.crm_financlick_movil.models.QuejaRequestModel
 import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.financlick.crm_financlick_movil.models.VentasModel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -160,4 +164,33 @@ interface ServiceApi {
 
     @DELETE("actividad/{id}")
     fun deleteActividad(@Path("id") id: Int): Call<Void>
+
+
+    // DocumentosEmpresa endpoints
+    @GET("documentos-empresa/lista/{idEmpresa}")
+    fun getDocumentosEmpresa(@Path("idEmpresa") idEmpresa: Int): Call<List<DocumentoEmpresaModel>>
+
+    @Multipart
+    @POST("documentos-empresa/subir")
+    fun subirDocumento(
+        @Part("idEmpresa") idEmpresa: RequestBody,
+        @Part("idDocumento") idDocumento: RequestBody,
+        @Part archivo: MultipartBody.Part
+    ): Call<Void>
+
+    @Multipart
+    @PUT("documentos-empresa/modificar/{idDocumentoEmpresa}")
+    fun modificarDocumento(
+        @Path("idDocumentoEmpresa") idDocumentoEmpresa: Int,
+        @Part archivo: MultipartBody.Part
+    ): Call<Void>
+
+    @GET("documentos-empresa/descargar/{idDocumentoEmpresa}")
+    fun descargarDocumento(@Path("idDocumentoEmpresa") idDocumentoEmpresa: Int): Call<DocumentoBase64Model>
+
+    @DELETE("documentos-empresa/eliminar/{idDocumentoEmpresa}")
+    fun eliminarDocumento(@Path("idDocumentoEmpresa") idDocumentoEmpresa: Int): Call<Void>
+
+
+
 }

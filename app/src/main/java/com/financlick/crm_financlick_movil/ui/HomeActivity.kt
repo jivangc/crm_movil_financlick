@@ -33,6 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.graphics.Typeface
+import androidx.cardview.widget.CardView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -41,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var tablaSolicitudes: TableLayout
     private lateinit var barChart: BarChart
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -49,55 +49,57 @@ class HomeActivity : AppCompatActivity() {
         session = SessionManager(this)
         Log.i("SESION", session.getUser().toString())
 
-        txtAprobado = findViewById(R.id.txtAprobado)
-        tablaSolicitudes = findViewById(R.id.tablaSolicitudes)
+        /*txtAprobado = findViewById(R.id.txtAprobado)
+        tablaSolicitudes = findViewById(R.id.tablaSolicitudes)*/
 
-        obtenerEmpresas()
-        obtenerIngresos()
+        /*obtenerEmpresas()
+        obtenerIngresos()*/
 
         // ------- Navegacion ----------
-        val quejasButton: ImageButton = findViewById(R.id.quejasButton)
-        val empresasButton: ImageButton = findViewById(R.id.empresasButton)
-        val marketingButton: ImageButton = findViewById(R.id.marketingButton)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val menuButton: ImageButton = findViewById(R.id.menuIcon)
-        val ventasButton: ImageButton = findViewById(R.id.btnVentas)
-        val planificacionButton: ImageButton = findViewById(R.id.btnPlanificacion)
-        val finanzasButton: ImageButton = findViewById(R.id.btnFinanzas)
 
-        barChart = findViewById(R.id.barChart)
-        // Accesos Directos
-        quejasButton.setOnClickListener {
-            val intent = Intent(this, QuejasActivity::class.java)
-            startActivity(intent)
+        // Configurar clics en las tarjetas
+        val cardEmpresas: CardView = findViewById(R.id.cardEmpresas)
+        val cardVentas: CardView = findViewById(R.id.cardVentas)
+        val cardMarketing: CardView = findViewById(R.id.cardMarketing)
+        val cardFinanzas: CardView = findViewById(R.id.cardFinanzas)
+        val cardPlanificacion: CardView = findViewById(R.id.cardPlanificacion)
+
+        cardEmpresas.setOnClickListener {
+            startActivity(Intent(this, EmpresasActivity::class.java))
         }
-        empresasButton.setOnClickListener {
-            val intent = Intent(this, EmpresasActivity::class.java)
-            startActivity(intent)
+
+        cardVentas.setOnClickListener {
+            startActivity(Intent(this, VentasActivity::class.java))
         }
-        marketingButton.setOnClickListener {
-            val intent = Intent(this, MarketingActivity::class.java)
-            startActivity(intent)
+
+        cardMarketing.setOnClickListener {
+            startActivity(Intent(this, MarketingActivity::class.java))
+        }
+
+        cardFinanzas.setOnClickListener {
+            // Uncomment when FinanzasActivity is available
+            // startActivity(Intent(this, FinanzasActivity::class.java))
+            Toast.makeText(this, "Módulo de Finanzas en desarrollo", Toast.LENGTH_SHORT).show()
+        }
+
+        cardPlanificacion.setOnClickListener {
+            startActivity(Intent(this, PlanificacionesPrincipal::class.java))
         }
 
         // Menu de Navegación
         menuButton.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        planificacionButton.setOnClickListener{
-            val intent = Intent(this, PanificacionActivity::class.java)
-            startActivity(intent)
-        }
-        ventasButton.setOnClickListener {
-            val intent = Intent(this, VentasActivity::class.java)
-            startActivity(intent)
-        }
-//        finanzasButton.setOnClickListener(){
-//            val intent = Intent(this, FinanzasActivity::class.java)
-//            startActivity(intent)
-//        }
+
         // ------- Navegacion ----------
 
+        //barChart = findViewById(R.id.barChart)
+        //setupBarChart()
+    }
+
+    private fun setupBarChart() {
         // Crear datos de ejemplo
         val entries = ArrayList<BarEntry>()
         entries.add(BarEntry(1f, 10f))
@@ -127,6 +129,7 @@ class HomeActivity : AppCompatActivity() {
         barChart.invalidate() // Refresca el gráfico
     }
 
+
     private fun obtenerEmpresas() {
         RetrofitClient.instance.getEmpresas().enqueue(object : Callback<List<EmpresaModel>> {
             override fun onResponse(call: Call<List<EmpresaModel>>, response: Response<List<EmpresaModel>>) {
@@ -150,7 +153,7 @@ class HomeActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<IngresosEgresoModel>>, response: Response<List<IngresosEgresoModel>>) {
                 if (response.isSuccessful) {
                     val ingresos = response.body() ?: emptyList()
-                    mostrarIngresosEnTabla(ingresos)
+                    //mostrarIngresosEnTabla(ingresos)
                 } else {
                     Toast.makeText(this@HomeActivity, "Error al obtener los ingresos", Toast.LENGTH_SHORT).show()
                 }
@@ -162,7 +165,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun mostrarIngresosEnTabla(ingresos: List<IngresosEgresoModel>) {
+    /*private fun mostrarIngresosEnTabla(ingresos: List<IngresosEgresoModel>) {
         val tablaSolicitudes: TableLayout = findViewById(R.id.tablaSolicitudes)
         tablaSolicitudes.removeAllViews()
 
@@ -220,7 +223,7 @@ class HomeActivity : AppCompatActivity() {
 
             tablaSolicitudes.addView(fila)
         }
-    }
+    }*/
 
 
 }
