@@ -65,6 +65,7 @@ class HomeActivity : AppCompatActivity() {
         val cardMarketing: CardView = findViewById(R.id.cardMarketing)
         val cardFinanzas: CardView = findViewById(R.id.cardFinanzas)
         val cardPlanificacion: CardView = findViewById(R.id.cardPlanificacion)
+        val cardEgresos: CardView = findViewById(R.id.cardEgresos)
 
         cardEmpresas.setOnClickListener {
             startActivity(Intent(this, EmpresasActivity::class.java))
@@ -86,6 +87,10 @@ class HomeActivity : AppCompatActivity() {
 
         cardPlanificacion.setOnClickListener {
             startActivity(Intent(this, PlanificacionesPrincipal::class.java))
+        }
+
+        cardEgresos.setOnClickListener {
+            startActivity(Intent(this, InfoEgresosActivity::class.java))
         }
 
         // Menu de Navegación
