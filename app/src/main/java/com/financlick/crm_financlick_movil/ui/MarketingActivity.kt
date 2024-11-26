@@ -16,7 +16,6 @@ class MarketingActivity : AppCompatActivity() {
 
         val cardModule1 = findViewById<androidx.cardview.widget.CardView>(R.id.cardModule1)
         val cardModule2 = findViewById<androidx.cardview.widget.CardView>(R.id.cardModule2)
-        val cardModule3 = findViewById<androidx.cardview.widget.CardView>(R.id.cardModule3)
 
         cardModule1.setOnClickListener {
             val intent = Intent(this, CampanasActivity::class.java)
@@ -30,10 +29,6 @@ class MarketingActivity : AppCompatActivity() {
             finish()
         }
 
-        cardModule3.setOnClickListener {
-            val intent = Intent(this, SitioWebActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
     }
 }

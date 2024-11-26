@@ -21,8 +21,13 @@ class PlanificacionesPrincipal : AppCompatActivity() {
             startActivity(intent)
         }
 
-        cardModule2.setOnClickListener {
+        /*cardModule2.setOnClickListener {
             val intent = Intent(this, ActividadActivity::class.java)
+            startActivity(intent)
+        }*/
+
+        cardModule2.setOnClickListener {
+            val intent = Intent(this, QuejasActivity::class.java)
             startActivity(intent)
         }
 

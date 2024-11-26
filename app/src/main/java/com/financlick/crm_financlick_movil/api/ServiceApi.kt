@@ -104,6 +104,9 @@ interface ServiceApi {
     @DELETE("contactopersona/{id}")
     fun deleteContacto(@Path("id") id: Int): Call<Void>
 
+    @GET("contactopersona/porEmpresa/{idEmpresa}")
+    fun getContactosPorEmpresa(@Path("idEmpresa") idEmpresa: Int): Call<List<PlanificacionModel>>
+
     // INGRESOS Y EGRESOS
     @GET("IngresosEgreso")
     fun getIngresosEgresos(): Call<List<IngresosEgresoModel>>
@@ -137,11 +140,11 @@ interface ServiceApi {
     @DELETE("Campania/{id}")
     fun deleteCampania(@Path("id") id: Int): Call<Void>
 
-    @POST("Campania/{id}/sendMails")
+    @POST("Campania/{id}/sendEmails")
     fun sendMails(@Path("id") id: Int, @Body emailsBody: EmailsBody): Call<Void>
 
     data class EmailsBody(
-        val emails: List<String>
+        val idsEmpresas: List<Int>
     )
 
 

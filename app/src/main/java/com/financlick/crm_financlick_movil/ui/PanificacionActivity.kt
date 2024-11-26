@@ -3,25 +3,23 @@ package com.financlick.crm_financlick_movil.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.adapters.CardContactoAddapter
-import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
+import com.financlick.crm_financlick_movil.adapters.CardEmpresaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardContactoItem
-import com.financlick.crm_financlick_movil.items.CardQuejaItem
+import com.financlick.crm_financlick_movil.items.CardEmpresasItem
+import com.financlick.crm_financlick_movil.models.EmpresaModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
-import com.financlick.crm_financlick_movil.models.QuejaModel
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class PanificacionActivity : AppCompatActivity() {
@@ -34,57 +32,64 @@ class PanificacionActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val adapter = CardContactoAddapter(emptyList())
+        val adapter = CardEmpresaAdapter(emptyList())
         recyclerView.adapter = adapter
 
-        this.getContactos { quejas ->
-            adapter.updateItems(quejas)
+        this.getEmpresas { empresas ->
+            adapter.updateItems(empresas)
         }
 
-        floatingButton = findViewById(R.id.addQueja)
-        floatingButton.setOnClickListener {
-            val intent = Intent(this, PlanificacionFormActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 
-    private fun getContactos(onComplete: (List<CardContactoItem>) -> Unit) {
-        RetrofitClient.instance.getContactos().enqueue(object: Callback<List<PlanificacionModel>>{
-            override fun onResponse(call: Call<List<PlanificacionModel>>, response: Response<List<PlanificacionModel>>) {
+    private fun getEmpresas(onComplete: (List<CardEmpresasItem>) -> Unit) {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        RetrofitClient.instance.getEmpresas().enqueue(object : Callback<List<EmpresaModel>> {
+            override fun onResponse(call: Call<List<EmpresaModel>>, response: Response<List<EmpresaModel>>) {
                 if (response.isSuccessful) {
-                    val contactos = response.body() ?: emptyList()
-                    if (contactos.isNotEmpty()) {
-                        val cardContactos = contactos.map { contacto ->
-                            CardContactoItem(
-                                idContacto = contacto.idContacto,
-                                idEmpresa = contacto.idEmpresa,
-                                email = if (contacto.email == null) "" else contacto.email,
-                                telefono = if (contacto.telefono == null) "" else contacto.telefono,
-                                nombre = contacto.nombre,
-                                apellido = contacto.apellido,
-                                puesto = contacto.puesto
+                    val empresas = response.body() ?: emptyList()
+                    if (empresas.isNotEmpty()) {
+                        val cardEmpresas = empresas.map { empresa ->
+                            CardEmpresasItem(
+                                idEmpresa = empresa.idEmpresa,
+                                nombreEmpresa = empresa.nombreEmpresa,
+                                razonSocial = empresa.razonSocial,
+                                fechaConstitucion = empresa.fechaConstitucion?.let { dateFormat.format(it) } ?: "",
+                                numeroEscritura = empresa.numeroEscritura,
+                                nombreNotario = empresa.nombreNotario,
+                                numeroNotario = empresa.numeroNotario,
+                                folioMercantil = empresa.folioMercantil,
+                                rfc = empresa.rfc,
+                                nombreRepresentanteLegal = empresa.nombreRepresentanteLegal,
+                                numeroEscrituraRepLeg = empresa.numeroEscrituraRepLeg,
+                                fechaInscripcion = empresa.fechaInscripcion?.let { dateFormat.format(it) } ?: "",
+                                calle = empresa.calle,
+                                colonia = empresa.colonia,
+                                cp = empresa.cp,
+                                telefono = empresa.telefono,
+                                estado = empresa.estado,
+                                localidad = empresa.localidad,
+                                numExterior = empresa.numExterior,
+                                numInterior = empresa.numInterior,
+                                email = empresa.email,
+                                estatus = empresa.estatus,
+                                logo = empresa.logo
                             )
                         }
-                        onComplete(cardContactos)
-                    }else{
+                        onComplete(cardEmpresas)
+                    } else {
                         onComplete(emptyList())
                     }
-                }else{
+                } else {
                     onComplete(emptyList())
                 }
             }
 
-            override fun onFailure(call: Call<List<PlanificacionModel>>, t: Throwable) {
+            override fun onFailure(call: Call<List<EmpresaModel>>, t: Throwable) {
                 // Manejar la falla de la llamada, por ejemplo, mostrar un mensaje de error
-                Log.e("Error al llenar los contactos", t.toString())
+                Log.e("ERROR", t.toString())
                 onComplete(emptyList())
             }
         })
-
     }
-
-
-
-
 }

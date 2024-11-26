@@ -39,6 +39,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
     private var contacto: PlanificacionModel? = null
     private val REQUEST_CALL = 1
     private val REQUEST_CALL_PERMISSION = 1
+    private var idEmpresa = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,8 @@ class PlanificacionFormActivity : AppCompatActivity() {
         btnGuardar = findViewById(R.id.btnGuardar)
         btnCancelar = findViewById(R.id.btnCancelar)
         btnLlamar = findViewById(R.id.btnLlamar)
+
+        idEmpresa = intent.getIntExtra("idEmpresa", 0)
 
         // Cargar contacto desde el Intent si existe
         val contactoRaw = intent.getStringExtra("contacto")
@@ -134,7 +137,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
             telefono = contacto.telefono,
             email = contacto.email,
             puesto = contacto.puesto,
-            idEmpresa = contacto.idEmpresa
+            idEmpresa = idEmpresa
         )
 
         RetrofitClient.instance.createContacto(planificacionModel).enqueue(object : Callback<PlanificacionModel> {
@@ -166,7 +169,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
             telefono = contacto.telefono,
             email = contacto.email,
             puesto = contacto.puesto,
-            idEmpresa = contacto.idEmpresa
+            idEmpresa = idEmpresa
         )
 
         RetrofitClient.instance.updateContacto(contacto.idContacto, planificacionModel)

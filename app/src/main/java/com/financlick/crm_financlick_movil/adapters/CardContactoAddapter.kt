@@ -51,6 +51,7 @@ class CardContactoAddapter(private var items: List<CardContactoItem>): RecyclerV
             val intent = Intent(holder.itemView.context, PlanificacionFormActivity::class.java)
             intent.putExtra("contacto", Gson().toJson(contactoItem))
             Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
+            intent.putExtra("idEmpresa", idEmpresa)
             holder.itemView.context.startActivity(intent)
         }
     }

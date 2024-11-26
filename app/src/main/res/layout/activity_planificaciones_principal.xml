@@ -140,14 +140,14 @@
                             android:id="@+id/iconModule2"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:src="@drawable/planificacion"
+                            android:src="@drawable/quejas"
                             android:layout_gravity="center"/>
 
                         <TextView
                             android:id="@+id/textModule2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Actividades"
+                            android:text="Quejas y Sugerencias"
                             android:textSize="18sp"
                             android:textColor="#0149AC"
                             android:layout_marginTop="8dp"

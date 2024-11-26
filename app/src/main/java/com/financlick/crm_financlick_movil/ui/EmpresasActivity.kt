@@ -1,22 +1,16 @@
 package com.financlick.crm_financlick_movil.ui
 
-import android.app.LauncherActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.adapters.CardEmpresaAdapter
-import com.financlick.crm_financlick_movil.adapters.CardQuejaAdapter
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardEmpresasItem
 import com.financlick.crm_financlick_movil.models.EmpresaModel
-import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
