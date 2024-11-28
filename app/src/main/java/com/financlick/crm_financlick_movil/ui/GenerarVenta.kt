@@ -72,6 +72,7 @@ class GenerarVenta : AppCompatActivity() {
             val empresaSeleccionada = empresas[empresaSpinner.selectedItemPosition]
 
             if (descripcion.isEmpty()) {
+                descripcionInput.error = "La descripción es obligatoria"
                 Toast.makeText(this, "La descripción es obligatoria", Toast.LENGTH_SHORT).show()
             } else {
                 // Formatear la fecha actual en "yyyy-MM-dd"
@@ -123,6 +124,7 @@ class GenerarVenta : AppCompatActivity() {
             val empresaSeleccionada = empresas[empresaSpinner.selectedItemPosition]
 
             if (descripcion.isEmpty()) {
+                descripcionInput.error = "La descripción es obligatoria"
                 Toast.makeText(this, "La descripción es obligatoria", Toast.LENGTH_SHORT).show()
             } else {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

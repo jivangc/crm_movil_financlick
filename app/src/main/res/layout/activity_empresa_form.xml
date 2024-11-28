@@ -370,19 +370,31 @@
                             android:inputType="textEmailAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Add this inside the existing layout, perhaps after the logo TextInputLayout -->
+                    <Button
+                        android:id="@+id/btn_select_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Logo Image"
+                        android:layout_marginTop="16dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_logo_preview"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"/>
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_logo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Logo URL"
-                            android:inputType="textUri" />
+
                     </com.google.android.material.textfield.TextInputLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

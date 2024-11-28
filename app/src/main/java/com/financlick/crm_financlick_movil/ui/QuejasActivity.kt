@@ -38,12 +38,12 @@ class QuejasActivity : AppCompatActivity() {
             adapter.updateItems(quejas)
         }
 
-        floatingButton = findViewById(R.id.addQueja)
+        /*floatingButton = findViewById(R.id.addQueja)
         floatingButton.setOnClickListener {
             val intent = Intent(this, QuejaFormActivity::class.java)
             startActivity(intent)
             finish()
-        }
+        }*/
     }
 
     private fun getQuejas(onComplete: (List<CardQuejaItem>) -> Unit) {

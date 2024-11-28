@@ -1,40 +1,39 @@
 package com.financlick.crm_financlick_movil.ui
 
-import android.content.Intent
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.financlick.crm_financlick_movil.R
-import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.api.RetrofitClient
-import com.financlick.crm_financlick_movil.ui.InfoEgresosActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.app.AlertDialog
-import android.view.View
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EgresosActivity : AppCompatActivity() {
     private var egresoExistente: IngresosEgresoModel? = null
+    private lateinit var montoEditText: EditText
+    private lateinit var descripcionEditText: EditText
+    private lateinit var agregarButton: Button
+    private lateinit var eliminarButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_egresos)
 
-        val montoEditText = findViewById<EditText>(R.id.monto)
-        val descripcionEditText = findViewById<EditText>(R.id.descripcion)
-        val agregarButton = findViewById<Button>(R.id.btnAgregar)
-        val eliminarButton = findViewById<Button>(R.id.btnEliminar)
+        montoEditText = findViewById(R.id.monto)
+        descripcionEditText = findViewById(R.id.descripcion)
+        agregarButton = findViewById(R.id.btnAgregar)
+        eliminarButton = findViewById(R.id.btnEliminar)
 
-        // Obtener el egreso enviado desde InfoEgresosActivity
         egresoExistente = intent.getSerializableExtra("egreso") as? IngresosEgresoModel
 
-        // Si hay un egreso existente, prellenar los campos y mostrar el botón de eliminar
         egresoExistente?.let { egreso ->
             montoEditText.setText(egreso.monto.toString())
             descripcionEditText.setText(egreso.descripcion)
@@ -42,57 +41,59 @@ class EgresosActivity : AppCompatActivity() {
             eliminarButton.visibility = View.VISIBLE
         }
 
-        // Lógica para agregar o actualizar
         agregarButton.setOnClickListener {
-            val montoText = montoEditText.text.toString()
-            val descripcionText = descripcionEditText.text.toString()
+            if (validateFields()) {
+                val monto = montoEditText.text.toString().toDoubleOrNull() ?: 0.0
+                val descripcion = descripcionEditText.text.toString()
 
-            if (montoText.isEmpty() || descripcionText.isEmpty()) {
-                Toast.makeText(this, "Por favor llena todos los campos.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+                val egreso = egresoExistente?.copy(
+                    monto = monto,
+                    descripcion = descripcion,
+                    fecha = getCurrentDate(),
+                    estatus = 1
+                ) ?: IngresosEgresoModel(
+                    fecha = getCurrentDate(),
+                    tipoTransaccion = 2,
+                    monto = monto,
+                    descripcion = descripcion,
+                    categoria = "Egreso",
+                    estatus = 1,
+                    idEmpresa = null
+                )
 
-            val monto: Double
-            try {
-                monto = montoText.toDouble()
-            } catch (e: NumberFormatException) {
-                Toast.makeText(this, "Por favor ingresa un monto válido.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val egreso = egresoExistente?.copy(
-                monto = monto,
-                descripcion = descripcionText,
-                fecha = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date()),
-                estatus = 1
-            ) ?: IngresosEgresoModel(
-                fecha = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date()),
-                tipoTransaccion = 2,
-                monto = monto,
-                descripcion = descripcionText,
-                categoria = "Egreso",
-                estatus = 1,
-                idEmpresa = null
-            )
-
-            if (egresoExistente != null) {
-                actualizarEgreso(egreso)
-            } else {
-                enviarEgreso(egreso)
-            }
-        }
-
-        // Lógica para eliminar
-        eliminarButton.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Confirmar eliminación")
-                .setMessage("¿Estás seguro de que deseas eliminar este egreso?")
-                .setPositiveButton("Sí") { _, _ ->
-                    eliminarEgreso()
+                if (egresoExistente != null) {
+                    actualizarEgreso(egreso)
+                } else {
+                    enviarEgreso(egreso)
                 }
-                .setNegativeButton("No", null)
-                .show()
+            }
         }
+
+        eliminarButton.setOnClickListener {
+            showDeleteConfirmationDialog()
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        var isValid = true
+
+        if (montoEditText.text.isNullOrBlank()) {
+            montoEditText.error = "Por favor ingresa un monto"
+            isValid = false
+        } else {
+            val monto = montoEditText.text.toString().toDoubleOrNull()
+            if (monto == null || monto <= 0) {
+                montoEditText.error = "Por favor ingresa un monto válido mayor a 0"
+                isValid = false
+            }
+        }
+
+        if (descripcionEditText.text.isNullOrBlank()) {
+            descripcionEditText.error = "Por favor ingresa una descripción"
+            isValid = false
+        }
+
+        return isValid
     }
 
     private fun enviarEgreso(egreso: IngresosEgresoModel) {
@@ -134,12 +135,26 @@ class EgresosActivity : AppCompatActivity() {
 
     private fun eliminarEgreso() {
         egresoExistente?.let { existing ->
-            val fechaActual = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
             val egresoEliminado = existing.copy(
                 estatus = 0,
-                fecha = fechaActual
+                fecha = getCurrentDate()
             )
             actualizarEgreso(egresoEliminado)
         }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Estás seguro de que deseas eliminar este egreso?")
+            .setPositiveButton("Sí") { _, _ ->
+                eliminarEgreso()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun getCurrentDate(): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     }
 }

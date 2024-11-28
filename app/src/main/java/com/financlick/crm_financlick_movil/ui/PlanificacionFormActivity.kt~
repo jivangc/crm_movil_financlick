@@ -144,7 +144,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
             telefonoInput.error = "El teléfono es requerido minimo 10 digitos"
             isValid = false
         }
-
+        
         if (emailInput.text.isNullOrBlank()) {
             emailInput.error = "El email es requerido"
             isValid = false

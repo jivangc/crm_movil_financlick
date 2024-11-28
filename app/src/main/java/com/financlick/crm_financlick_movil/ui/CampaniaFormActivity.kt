@@ -76,19 +76,75 @@ class CampaniaFormActivity : AppCompatActivity() {
             contenidoInput.setText(it.contenido)
         }
 
-        btnGuardar.setOnClickListener() {
-            var idCampania = campania?.idCampania ?: 0
-            val formCampania = loadCampania(idCampania)
-            if (idCampania != 0) {
-                actualizarCampania(formCampania)
-            }else{
-                guardarCampania(formCampania)
+
+        btnGuardar.setOnClickListener {
+            if (validateFields()) {
+                var idCampania = campania?.idCampania ?: 0
+                val formCampania = loadCampania(idCampania)
+                if (idCampania != 0) {
+                    actualizarCampania(formCampania)
+                } else {
+                    guardarCampania(formCampania)
+                }
             }
         }
 
         btnCancelar.setOnClickListener() {
             finish()
         }
+    }
+
+    private fun validateFields(): Boolean {
+        var isValid = true
+
+        if (tipoCampaniaInput.text.isNullOrBlank()) {
+            tipoCampaniaInput.error = "El tipo de campaña es obligatorio"
+            isValid = false
+        }
+
+        if (tituloCampaniaInput.text.isNullOrBlank()) {
+            tituloCampaniaInput.error = "El título de la campaña es obligatorio"
+            isValid = false
+        }
+
+        if (descripcionCampaniaInput.text.isNullOrBlank()) {
+            descripcionCampaniaInput.error = "La descripción de la campaña es obligatoria"
+            isValid = false
+        }
+
+        if (dominioCampaniaInput.text.isNullOrBlank()) {
+            dominioCampaniaInput.error = "El dominio de la campaña es obligatorio"
+            isValid = false
+        }
+
+        if (fechaInicioInput.text.isNullOrBlank()) {
+            fechaInicioInput.error = "La fecha de inicio es obligatoria"
+            isValid = false
+        }
+
+        if (fechaFinInput.text.isNullOrBlank()) {
+            fechaFinInput.error = "La fecha de fin es obligatoria"
+            isValid = false
+        }
+
+        if (contenidoInput.text.isNullOrBlank()) {
+            contenidoInput.error = "El contenido es obligatorio"
+            isValid = false
+        }
+
+        // Validar que la fecha de fin sea posterior a la fecha de inicio
+        if (!fechaInicioInput.text.isNullOrBlank() && !fechaFinInput.text.isNullOrBlank()) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+            val fechaInicio = dateFormat.parse(fechaInicioInput.text.toString())
+            val fechaFin = dateFormat.parse(fechaFinInput.text.toString())
+
+            if (fechaFin != null && fechaInicio != null && fechaFin.before(fechaInicio)) {
+                fechaFinInput.error = "La fecha de fin debe ser posterior a la fecha de inicio"
+                isValid = false
+            }
+        }
+
+        return isValid
     }
 
     private fun showDatePickerDialog(editText: EditText, dateFormat: SimpleDateFormat) {

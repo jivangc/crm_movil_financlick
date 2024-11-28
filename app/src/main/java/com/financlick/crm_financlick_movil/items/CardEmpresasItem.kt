@@ -23,5 +23,5 @@ class CardEmpresasItem (
     val numInterior: String,
     val email: String,
     val estatus: Int,
-    val logo: String
+    var logo: String
 )

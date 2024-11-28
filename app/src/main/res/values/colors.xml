@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#8692f7</color>
 
+    <color name="green">#4CAF50</color> <!-- Verde -->
+    <color name="red">#F44336</color>   <!-- Rojo -->
+
+
 </resources>

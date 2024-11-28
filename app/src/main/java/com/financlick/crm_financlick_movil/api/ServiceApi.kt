@@ -2,15 +2,19 @@ package com.financlick.crm_financlick_movil.api
 
 import com.financlick.crm_financlick_movil.models.CampaniaModel
 import com.financlick.crm_financlick_movil.models.ActividadModel
+import com.financlick.crm_financlick_movil.models.AcumuladoAnualModel
 import com.financlick.crm_financlick_movil.models.DocumentoBase64Model
 import com.financlick.crm_financlick_movil.models.DocumentoEmpresaModel
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.EmpresaModelSave
 import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.LoginModel
 import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
+import com.financlick.crm_financlick_movil.models.ProximoPagoModel
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.financlick.crm_financlick_movil.models.QuejaRequestModel
+import com.financlick.crm_financlick_movil.models.TotalesMensualesModel
 import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.financlick.crm_financlick_movil.models.VentasModel
 import okhttp3.MultipartBody
@@ -58,11 +62,11 @@ interface ServiceApi {
 
     //Crear una nueva empresa
     @POST("Empresa")
-    fun createEmpresa(@Body empresa: EmpresaModel): Call<ResponseBody>
+    fun createEmpresa(@Body empresa: EmpresaModelSave): Call<ResponseBody>
 
     //Actualizar una empresa existente
     @PUT("Empresa/{id}")
-    fun updateEmpresa(@Body empresa: EmpresaModel, @Path("id") id: Int): Call<Void>
+    fun updateEmpresa(@Body empresa: EmpresaModelSave, @Path("id") id: Int): Call<Void>
 
     //Eliminar una empresa
     @DELETE("Empresa/{id}")
@@ -134,6 +138,14 @@ interface ServiceApi {
     fun crearEgreso(
         @Body request: IngresosEgresoModel
     ): Call<IngresosEgresoModel>
+
+    //Modal
+    @GET("IngresosEgreso/acumulado-anual")
+    fun getAcumuladoAnual(): Call<List<AcumuladoAnualModel>>
+
+
+    @GET("IngresosEgreso/totales-mensuales")
+    fun getTotales(): Call<List<TotalesMensualesModel>>
 
     // ServiceApi.kt
     @GET("PlanEmpresa/{idPlan}")
@@ -209,6 +221,8 @@ interface ServiceApi {
     @DELETE("documentos-empresa/eliminar/{idDocumentoEmpresa}")
     fun eliminarDocumento(@Path("idDocumentoEmpresa") idDocumentoEmpresa: Int): Call<Void>
 
+    @GET("Payment/get-proximo-pago")
+    fun getProximoPago(): Call<List<ProximoPagoModel>>
 
 
 }

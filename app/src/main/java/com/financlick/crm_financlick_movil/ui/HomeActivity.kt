@@ -81,7 +81,7 @@ class HomeActivity : AppCompatActivity() {
 
         cardFinanzas.setOnClickListener {
             // Uncomment when FinanzasActivity is available
-            // startActivity(Intent(this, FinanzasActivity::class.java))
+            startActivity(Intent(this, FinanzasActivity::class.java))
             Toast.makeText(this, "Módulo de Finanzas en desarrollo", Toast.LENGTH_SHORT).show()
         }
 

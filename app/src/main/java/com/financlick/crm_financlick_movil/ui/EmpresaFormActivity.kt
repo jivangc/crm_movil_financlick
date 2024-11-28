@@ -1,12 +1,17 @@
 package com.financlick.crm_financlick_movil.ui
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +22,7 @@ import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardEmpresasItem
 import com.financlick.crm_financlick_movil.models.EmpresaModel
+import com.financlick.crm_financlick_movil.models.EmpresaModelSave
 import com.financlick.crm_financlick_movil.models.QuejaModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +32,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -59,6 +66,12 @@ class EmpresaFormActivity : AppCompatActivity() {
 
     private var contexto = this
 
+    private lateinit var btnSelectImage: MaterialButton
+    private lateinit var ivLogoPreview: ImageView
+    private val PICK_IMAGE_REQUEST = 1
+    private lateinit var logo_b64: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -89,7 +102,7 @@ class EmpresaFormActivity : AppCompatActivity() {
         numInterior = findViewById(R.id.et_numInterior)
         email = findViewById(R.id.et_email)
         //estatus = findViewById(R.id.)
-        logo = findViewById(R.id.et_logo)
+        // logo = findViewById(R.id.et_logo)
 
         //Seccion de botones
         buttonGuardar = findViewById(R.id.btn_submit)
@@ -104,6 +117,12 @@ class EmpresaFormActivity : AppCompatActivity() {
             buttonEliminar.visibility = View.GONE
         }
 
+        btnSelectImage = findViewById(R.id.btn_select_image)
+        ivLogoPreview = findViewById(R.id.iv_logo_preview)
+
+        btnSelectImage.setOnClickListener {
+            openImageChooser()
+        }
 
         //val etFechaInscripcion = findViewById<TextInputEditText>(R.id.et_fechaInscripcion)
 
@@ -141,6 +160,8 @@ class EmpresaFormActivity : AppCompatActivity() {
                     }
                 }
             }
+
+
         })
 
 
@@ -204,13 +225,13 @@ class EmpresaFormActivity : AppCompatActivity() {
             numInterior.setText(it.numInterior)
             email.setText(it.email)
             //estatus.setText(it.estatus)
-            logo.setText(it.logo)
+            logo_b64 = it.logo
         }
 
         buttonGuardar.setOnClickListener {
             if (validateFields()) {
                 val request = loadEmpresaRequest()
-                if (empresa.idEmpresa == 0) {
+                if (request.idEmpresa == 0) {
                     // Guardar nueva empresa
                     Toast.makeText(this, "Guardando", Toast.LENGTH_SHORT).show()
                     guardarEmpresa(request)
@@ -234,6 +255,33 @@ class EmpresaFormActivity : AppCompatActivity() {
         }
     }
 
+    private fun openImageChooser() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            val imageUri: Uri = data.data!!
+            ivLogoPreview.setImageURI(imageUri)
+
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+            val base64Image = bitmapToBase64(bitmap)
+            logo_b64 = base64Image
+            //logo.setText(base64Image)
+        }
+    }
+
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
 
     //Funcion para validar los campos
     private fun validateFields(): Boolean {
@@ -274,7 +322,7 @@ class EmpresaFormActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (rfc.text.isNullOrBlank() || rfc.text.toString().length != 13) {
+        if (rfc.text.isNullOrBlank() || rfc.text.toString().length > 13 || rfc.text.toString().length < 12) {
             rfc.error = "El RFC es obligatorio"
             isValid = false
         }
@@ -309,8 +357,8 @@ class EmpresaFormActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (telefono.text.isNullOrBlank()) {
-            telefono.error = "El teléfono es obligatorio"
+        if (telefono.text.isNullOrBlank() || telefono.text.toString().length < 10) {
+            telefono.error = "El teléfono es obligatorio minimo 10 digitos"
             isValid = false
         }
 
@@ -337,6 +385,9 @@ class EmpresaFormActivity : AppCompatActivity() {
         if (email.text.isNullOrBlank()) {
             email.error = "El correo electrónico es obligatorio"
             isValid = false
+        }else if (!isValidEmail(email.text.toString())) {
+            email.error = "Por favor, ingrese un email válido"
+            isValid = false
         }
 
         return isValid
@@ -344,23 +395,27 @@ class EmpresaFormActivity : AppCompatActivity() {
 
 
 
+    private fun isValidEmail(email: String): Boolean {
+        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+        return email.matches(emailRegex.toRegex())
+    }
+    private fun loadEmpresaRequest(): EmpresaModelSave {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-    private fun loadEmpresaRequest(): EmpresaModel {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        val fechaConstitucionDate = fechaConstitucion.text.toString().let {
-            try { dateFormat.parse(it) } catch (e: Exception) { null }
+        val formattedFechaConstitucion = fechaConstitucion.text.toString().let {
+            try { formatDateForApi(it) } catch (e: Exception) { null }
         }
 
-        val fechaInscripcionDate = fechaInscripcion.text.toString().let {
-            try { dateFormat.parse(it) } catch (e: Exception) { null }
+        val formattedFechaInscripcion = fechaInscripcion.text.toString().let {
+            try { formatDateForApi(it) } catch (e: Exception) { null }
         }
 
-        val empresa = EmpresaModel(
+
+        val empresa = EmpresaModelSave(
             idEmpresa = idEmpresa.text.toString().toIntOrNull() ?: 0,
             nombreEmpresa = nombreEmpresa.text.toString(),
             razonSocial = razonSocial.text.toString(),
-            fechaConstitucion = fechaConstitucionDate,
+            fechaConstitucion = formattedFechaConstitucion,
             numeroEscritura = numeroEscritura.text.toString(),
             nombreNotario = nombreNotario.text.toString(),
             numeroNotario = numeroNotario.text.toString(),
@@ -368,7 +423,7 @@ class EmpresaFormActivity : AppCompatActivity() {
             rfc = rfc.text.toString(),
             nombreRepresentanteLegal = nombreRepresentanteLegal.text.toString(),
             numeroEscrituraRepLeg = numeroEscrituraRepLeg.text.toString(),
-            fechaInscripcion = fechaInscripcionDate,
+            fechaInscripcion = formattedFechaInscripcion,
             calle = calle.text.toString(),
             colonia = colonia.text.toString(),
             cp = cp.text.toString(),
@@ -379,8 +434,10 @@ class EmpresaFormActivity : AppCompatActivity() {
             numInterior = numInterior.text.toString(),
             email = email.text.toString(),
             estatus = 1,
-            logo = logo.text.toString()
+            logo = logo_b64
         )
+
+
 
         return empresa
     }
@@ -388,7 +445,7 @@ class EmpresaFormActivity : AppCompatActivity() {
 
 
 
-    private fun guardarEmpresa(param: EmpresaModel) {
+    private fun guardarEmpresa(param: EmpresaModelSave) {
         RetrofitClient.instance.createEmpresa(param).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
@@ -413,7 +470,7 @@ class EmpresaFormActivity : AppCompatActivity() {
 
     }
 
-    private fun actualizarEmpresa(param: EmpresaModel) {
+    private fun actualizarEmpresa(param: EmpresaModelSave) {
         RetrofitClient.instance.updateEmpresa(param, param.idEmpresa).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
@@ -477,5 +534,24 @@ class EmpresaFormActivity : AppCompatActivity() {
     }
 
 
+    private val localFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val apiFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
+    fun formatDateForApi(localDate: String): String {
+        return try {
+            val date = localFormat.parse(localDate)
+            apiFormat.format(date)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid date format. Use DD/MM/YYYY")
+        }
+    }
+
+    fun formatDateFromApi(apiDate: String): String {
+        return try {
+            val date = apiFormat.parse(apiDate)
+            localFormat.format(date)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Invalid API date format")
+        }
+    }
 }

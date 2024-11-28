@@ -32,12 +32,12 @@ class VentasActivity : AppCompatActivity() {
         adapter = CardVentaAdapter(emptyList()) { venta -> onVentaSelected(venta) }
         recyclerView.adapter = adapter
 
-        // Configurar FloatingActionButton
+        /* Configurar FloatingActionButton
         floatingButton = findViewById(R.id.addVenta)
         floatingButton.setOnClickListener {
             val intent = Intent(this, GenerarVenta::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
     override fun onResume() {

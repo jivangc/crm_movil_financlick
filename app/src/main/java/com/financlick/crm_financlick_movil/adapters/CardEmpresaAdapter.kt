@@ -32,6 +32,7 @@ class CardEmpresaAdapter (private var items: List<CardEmpresasItem>): RecyclerVi
         holder.buttonView.setOnClickListener {
             //Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
             val intent = Intent(holder.itemView.context, EmpresaFormActivity::class.java)
+            empresaItem.logo = ""
             intent.putExtra("empresa", Gson().toJson(empresaItem))
             Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
             holder.itemView.context.startActivity(intent)

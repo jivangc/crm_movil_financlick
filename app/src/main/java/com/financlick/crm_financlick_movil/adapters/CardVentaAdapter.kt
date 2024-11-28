@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.items.CardVentaItem
 import com.financlick.crm_financlick_movil.ui.GenerarVenta
+import com.google.gson.Gson
 
 class CardVentaAdapter(
     private var items: List<CardVentaItem>,
@@ -35,7 +36,7 @@ class CardVentaAdapter(
         holder.buttonGenerarVenta.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, GenerarVenta::class.java)
-            intent.putExtra("VENTA_PROSPECTO", ventaItem)
+            intent.putExtra("VENTA_PROSPECTO", Gson().toJson(ventaItem))
             context.startActivity(intent)
         }
     }
