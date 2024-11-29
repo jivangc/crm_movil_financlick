@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -44,6 +45,10 @@ class QuejaFormActivity : AppCompatActivity() {
         val queja = Gson().fromJson(quejaRaw, CardQuejaItem::class.java)
 
         // Inicializar vistas
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
+
 
         tipoInput = findViewById(R.id.tipoInput)
         descripcionInput = findViewById(R.id.descripcionInput)

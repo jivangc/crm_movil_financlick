@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,10 @@ class InfoEgresosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_egresos)
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         recyclerView = findViewById(R.id.recyclerViewEgresos)
         recyclerView.layoutManager = LinearLayoutManager(this)

@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -78,6 +79,11 @@ class EmpresaFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_empresa_form)
         var empresaRaw = intent.getStringExtra("empresa").toString()
         val empresa = Gson().fromJson(empresaRaw, CardEmpresasItem::class.java)
+
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         // Inicializar campos con los datos de la empresa
         idEmpresa = findViewById(R.id.et_idEmpresa)

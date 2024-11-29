@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,10 @@ class EmpresasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_empresas)
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

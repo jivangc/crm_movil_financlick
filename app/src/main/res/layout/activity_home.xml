@@ -363,40 +363,6 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Card para Planificación -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardEgresos"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_marginTop="10dp"
-                            android:id="@+id/btnEgresos"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:src="@drawable/egresos"
-                            android:contentDescription="Icono de Egresos"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Egresos"
-                            android:textSize="18sp"
-                            android:padding="16dp"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
             </GridLayout>
             <!-- Card para las solicitudes -->

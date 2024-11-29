@@ -3,6 +3,7 @@ package com.financlick.crm_financlick_movil.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,10 @@ class PanificacionActivity : AppCompatActivity() {
 
         val adapter = CardEmpresaAdapter(emptyList())
         recyclerView.adapter = adapter
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         this.getEmpresas { empresas ->
             adapter.updateItems(empresas)

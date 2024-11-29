@@ -2,6 +2,7 @@ package com.financlick.crm_financlick_movil.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +16,12 @@ class PlanificacionesPrincipal : AppCompatActivity() {
         setContentView(R.layout.activity_planificaciones_principal)
         val cardModule1 = findViewById<androidx.cardview.widget.CardView>(R.id.cardModule1)
         val cardModule2 = findViewById<androidx.cardview.widget.CardView>(R.id.cardModule2)
+
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
+
 
         cardModule1.setOnClickListener {
             val intent = Intent(this, PanificacionActivity::class.java)

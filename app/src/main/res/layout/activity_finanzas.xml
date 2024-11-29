@@ -5,133 +5,236 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- ScrollView para permitir el desplazamiento -->
+    <android.widget.ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0149AC"
-        android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/backIcon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/back"
-                android:scaleType="fitCenter" />
-
-            <TextView
-                android:id="@+id/welcomeText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Formulario de Empresas"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:gravity="center" />
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:id="@+id/filtersLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/pagosButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ver Pagos" />
-
-    </LinearLayout>
-
-    <!-- Totales Mensuales Chart (Line) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardTotalesMensuales"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/filtersLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cardAcumuladoAnual"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
-            android:padding="16dp">
+            android:padding="0dp">
 
-            <TextView
-                android:id="@+id/titleTotalesMensuales"
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Totales Mensuales"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="8dp" />
+                android:background="#0149AC"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fitsSystemWindows="true">
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chartTotalesMensuales"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-    <!-- Acumulado Anual Chart (Pie) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardAcumuladoAnual"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/cardTotalesMensuales"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp">
+                    <TextView
+                        android:id="@+id/welcomeText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Finanzas"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:gravity="center" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/titleAcumuladoAnual"
+            <!-- Filtros -->
+            <LinearLayout
+                android:id="@+id/filtersLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Acumulado Anual"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginTop="16dp"
+                android:padding="16dp"> <!-- Aseguramos que tenga padding para no tocar otros elementos -->
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/chartAcumuladoAnual"
+                <Button
+                    android:id="@+id/pagosButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver Pagos"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:layout_marginEnd="16dp" />
+
+                <Button
+                    android:id="@+id/egresosButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar Egresos"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:layout_marginEnd="16dp" />
+            </LinearLayout>
+
+            <!-- Totales Mensuales Chart -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardTotalesMensuales"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleTotalesMensuales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Totales Mensuales"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chartTotalesMensuales"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Acumulado Anual Chart -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAcumuladoAnual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginTop="16dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleAcumuladoAnual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Acumulado Anual"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chartAcumuladoAnual"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Bottom Navigation -->
+            <LinearLayout
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#FFFFFF"
+                android:elevation="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/cardAcumuladoAnual">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/pagina_de_inicio"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnPlanificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/planificacion"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnVentas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ventas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnFinanzas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/finanzas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+
+
+
+    </android.widget.ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

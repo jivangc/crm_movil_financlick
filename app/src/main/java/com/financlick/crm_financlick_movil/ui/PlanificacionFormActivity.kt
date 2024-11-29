@@ -14,10 +14,12 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
+import android.widget.LinearLayout
 
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import okhttp3.ResponseBody
@@ -33,8 +35,8 @@ class PlanificacionFormActivity : AppCompatActivity() {
     private lateinit var telefonoInput: TextInputEditText
     private lateinit var emailInput: TextInputEditText
     private lateinit var puestoInput: TextInputEditText
-    private lateinit var btnGuardar: MaterialButton
-    private lateinit var btnCancelar: MaterialButton
+    private lateinit var btnGuardar: FloatingActionButton
+    private lateinit var btnCancelar: FloatingActionButton
     private lateinit var btnLlamar: MaterialButton
     private var contacto: PlanificacionModel? = null
     private val REQUEST_CALL = 1
@@ -44,6 +46,10 @@ class PlanificacionFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_planificacion_form)
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         // Inicializar vistas
         nombreInput = findViewById(R.id.nombreInput)

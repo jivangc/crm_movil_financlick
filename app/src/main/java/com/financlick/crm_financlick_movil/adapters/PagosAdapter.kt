@@ -15,6 +15,7 @@ class PagosAdapter(
 
     inner class PagosViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtEmpresa: TextView = view.findViewById(R.id.txtEmpresa)
+        val txtFecha : TextView = view.findViewById(R.id.txtFecha)
         val txtMonto: TextView = view.findViewById(R.id.txtMonto)
         val statusIndicator: View = view.findViewById(R.id.statusIndicator) // Indicador circular
     }
@@ -34,9 +35,16 @@ class PagosAdapter(
         // Actualizar el texto del monto
         holder.txtMonto.text = "$${pago.amount} MXN"
 
+        if (pago.status == "Paid") {
+            holder.txtFecha.text = "Fecha de creacion: ${pago.paidAt}"
+        }else{
+            holder.txtFecha.text = "Fecha de pago: ${pago.createdAt}"
+        }
+
         // Cambiar el color del indicador de estado
         val statusColor = if (pago.status == "Paid") {
             holder.itemView.context.getColor(R.color.green) // Color para pagos completados
+
         } else {
             holder.itemView.context.getColor(R.color.red) // Color para pagos pendientes
         }

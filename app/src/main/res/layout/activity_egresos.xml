@@ -36,13 +36,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <ImageButton
-                        android:id="@+id/backIcon"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/back"
-                        android:scaleType="fitCenter" />
+
 
                     <TextView
                         android:id="@+id/welcomeText"
@@ -100,30 +94,140 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Botón Agregar/Actualizar -->
-                    <Button
-                        android:id="@+id/btnAgregar"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Agregar"
-                        android:backgroundTint="#4CAF50"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="16dp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/btnLlamar"
+                        app:layout_constraintEnd_toEndOf="parent">
 
-                    <!-- Botón Eliminar -->
-                    <Button
-                        android:id="@+id/btnEliminar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Eliminar"
-                        android:backgroundTint="#FF0000"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="16dp"
-                        android:visibility="gone" /> <!-- Oculto por defecto -->
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnCancelar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/back"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Cancelar"
+                            android:backgroundTint="#F7DC6F"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_marginEnd="8dp"/>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnEliminar"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/delete"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Eliminar"
+                            android:backgroundTint="#F44336"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_marginEnd="8dp"/>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnAgregar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/save"
+                            app:tint="@android:color/white"
+                            android:contentDescription="Guardar"
+                            android:backgroundTint="#4CAF50"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </ScrollView>
+            <!-- Bottom Navigation -->
+            <LinearLayout
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#FFFFFF"
+                android:elevation="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/pagina_de_inicio"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnPlanificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/planificacion"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnVentas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ventas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnFinanzas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.50"
+                        android:scaleY="0.50"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/finanzas"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

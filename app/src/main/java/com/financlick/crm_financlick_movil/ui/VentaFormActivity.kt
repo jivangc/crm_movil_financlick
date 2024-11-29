@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,7 @@ import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardVentaItem
 import com.financlick.crm_financlick_movil.models.UsuarioModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import okhttp3.ResponseBody
@@ -33,8 +35,8 @@ class VentaFormActivity : AppCompatActivity() {
     private lateinit var estado: TextInputEditText
     private lateinit var rfc: TextInputEditText
     private lateinit var empleadoSpinner: Spinner
-    private lateinit var btnEnviar: MaterialButton
-    private lateinit var btnCancelar: MaterialButton
+    private lateinit var btnEnviar: FloatingActionButton
+    private lateinit var btnCancelar: FloatingActionButton
     private var ventaActual: CardVentaItem? = null
     private var empleados = listOf<UsuarioModel>()
     private var contexto = this
@@ -45,6 +47,10 @@ class VentaFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_venta_form)
 
         inicializarVistas()
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
         // Obtener la venta actual utilizando la clave correcta
         ventaActual = intent.getSerializableExtra("VENTA_ACTUAL") as? CardVentaItem

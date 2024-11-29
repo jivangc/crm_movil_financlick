@@ -29,6 +29,10 @@ class SolicitudesCampaniasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_solicitudes_campanias)
 
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
+
         spinnerCampanias = findViewById(R.id.spinnerCampanias)
         recyclerViewEmpresas = findViewById(R.id.recyclerViewEmpresas)
         btnEnviarSolicitud = findViewById(R.id.btnEnviarSolicitud)

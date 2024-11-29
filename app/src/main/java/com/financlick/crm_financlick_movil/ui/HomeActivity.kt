@@ -33,31 +33,86 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.graphics.Typeface
+import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
+import com.financlick.crm_financlick_movil.MainActivity
+import com.google.android.material.navigation.NavigationView
 
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var session: SessionManager
-    private lateinit var txtAprobado: TextView
-    private lateinit var tablaSolicitudes: TableLayout
-    private lateinit var barChart: BarChart
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var menuButton: ImageButton
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
         session = SessionManager(this)
-        Log.i("SESION", session.getUser().toString())
 
-        /*txtAprobado = findViewById(R.id.txtAprobado)
-        tablaSolicitudes = findViewById(R.id.tablaSolicitudes)*/
 
-        /*obtenerEmpresas()
-        obtenerIngresos()*/
+        // Helper Bottom Menu
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
-        // ------- Navegacion ----------
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val menuButton: ImageButton = findViewById(R.id.menuIcon)
+        // ------- Inicialización de Drawer Layout y Menu Button ----------
+        drawerLayout = findViewById(R.id.drawer_layout)
+        menuButton = findViewById(R.id.menuIcon)
+        navigationView = findViewById(R.id.nav_view)
+
+        // ------- Navegación de botones en el DrawerMenu ----------
+        menuButton.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        // ------- Acciones del menú de navegación -----------
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    // Si ya estás en esta actividad, no hacer nada o puedes hacer un "toast"
+                    Toast.makeText(this, "Ya estás en Inicio", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_profile -> {
+                    // Redirige a EmpresasActivity
+                    startActivity(Intent(this, EmpresasActivity::class.java))
+                }
+                R.id.nav_plan -> {
+                    // Redirige a PlanificacionesPrincipal
+                    startActivity(Intent(this, PlanificacionesPrincipal::class.java))
+                }
+                R.id.nav_marketing -> {
+                    // Redirige a MarketingActivity
+                    startActivity(Intent(this, MarketingActivity::class.java))
+                }
+                R.id.nav_sales -> {
+                    // Redirige a VentasActivity
+                    startActivity(Intent(this, VentasActivity::class.java))
+                }
+                R.id.nav_finance -> {
+                    // Redirige a FinanzasActivity
+                    startActivity(Intent(this, FinanzasActivity::class.java))
+                }
+                R.id.nav_quejas -> {
+                    // Redirige a QuejasActivity (si existe)
+                    startActivity(Intent(this, QuejasActivity::class.java))
+                }
+                R.id.logout -> {
+                    // Cerrar sesión
+                    // Regresar al login o salir de la app
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish() // Opcional si deseas finalizar la actividad actual
+                }
+                else -> {
+                    // Acción por defecto
+                    Toast.makeText(this, "Opción no definida", Toast.LENGTH_SHORT).show()
+                }
+            }
+            // Cerrar el drawer después de que el usuario haya hecho una selección
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
 
         // Configurar clics en las tarjetas
         val cardEmpresas: CardView = findViewById(R.id.cardEmpresas)
@@ -65,7 +120,6 @@ class HomeActivity : AppCompatActivity() {
         val cardMarketing: CardView = findViewById(R.id.cardMarketing)
         val cardFinanzas: CardView = findViewById(R.id.cardFinanzas)
         val cardPlanificacion: CardView = findViewById(R.id.cardPlanificacion)
-        val cardEgresos: CardView = findViewById(R.id.cardEgresos)
 
         cardEmpresas.setOnClickListener {
             startActivity(Intent(this, EmpresasActivity::class.java))
@@ -80,155 +134,11 @@ class HomeActivity : AppCompatActivity() {
         }
 
         cardFinanzas.setOnClickListener {
-            // Uncomment when FinanzasActivity is available
             startActivity(Intent(this, FinanzasActivity::class.java))
-            Toast.makeText(this, "Módulo de Finanzas en desarrollo", Toast.LENGTH_SHORT).show()
         }
 
         cardPlanificacion.setOnClickListener {
             startActivity(Intent(this, PlanificacionesPrincipal::class.java))
         }
-
-        cardEgresos.setOnClickListener {
-            startActivity(Intent(this, InfoEgresosActivity::class.java))
-        }
-
-        // Menu de Navegación
-        menuButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        // ------- Navegacion ----------
-
-        //barChart = findViewById(R.id.barChart)
-        //setupBarChart()
     }
-
-    private fun setupBarChart() {
-        // Crear datos de ejemplo
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1f, 10f))
-        entries.add(BarEntry(2f, 20f))
-        entries.add(BarEntry(3f, 15f))
-        entries.add(BarEntry(4f, 30f))
-        entries.add(BarEntry(5f, 25f))
-
-        // Crear el DataSet
-        val dataSet = BarDataSet(entries, "Datos de ejemplo")
-        dataSet.color = Color.BLUE
-        dataSet.valueTextColor = Color.BLACK
-
-        // Crear el LineData con el DataSet
-        val barData = BarData(dataSet)
-
-        // Configurar el BarChart
-        barChart.data = barData
-        barChart.description.isEnabled = false
-        barChart.setFitBars(true) // Ajusta las barras al gráfico
-        barChart.animateY(1000) // Animación de entrada
-
-        // Opciones adicionales de configuración
-        barChart.axisRight.isEnabled = false // Desactiva el eje derecho
-        barChart.xAxis.granularity = 1f // Intervalo en el eje X
-        barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM // Posición del eje X
-        barChart.invalidate() // Refresca el gráfico
-    }
-
-
-    private fun obtenerEmpresas() {
-        RetrofitClient.instance.getEmpresas().enqueue(object : Callback<List<EmpresaModel>> {
-            override fun onResponse(call: Call<List<EmpresaModel>>, response: Response<List<EmpresaModel>>) {
-                if (response.isSuccessful) {
-                    val empresas = response.body() ?: emptyList()
-                    val conteoEmpresas = empresas.count()
-                    txtAprobado.text = "$conteoEmpresas Empresas"
-                } else {
-                    Toast.makeText(this@HomeActivity, "Error al obtener las empresas", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<EmpresaModel>>, t: Throwable) {
-                Toast.makeText(this@HomeActivity, "Error en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun obtenerIngresos() {
-        RetrofitClient.instance.getIngresos().enqueue(object : Callback<List<IngresosEgresoModel>> {
-            override fun onResponse(call: Call<List<IngresosEgresoModel>>, response: Response<List<IngresosEgresoModel>>) {
-                if (response.isSuccessful) {
-                    val ingresos = response.body() ?: emptyList()
-                    //mostrarIngresosEnTabla(ingresos)
-                } else {
-                    Toast.makeText(this@HomeActivity, "Error al obtener los ingresos", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<IngresosEgresoModel>>, t: Throwable) {
-                Toast.makeText(this@HomeActivity, "Error en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    /*private fun mostrarIngresosEnTabla(ingresos: List<IngresosEgresoModel>) {
-        val tablaSolicitudes: TableLayout = findViewById(R.id.tablaSolicitudes)
-        tablaSolicitudes.removeAllViews()
-
-        // Agrega el encabezado de la tabla
-        val headerRow = TableRow(this)
-        headerRow.gravity = Gravity.CENTER_HORIZONTAL
-
-        val headerFecha = TextView(this)
-        headerFecha.text = "Fecha"
-        headerFecha.setPadding(8, 8, 8, 8)
-        headerFecha.setTypeface(null, Typeface.BOLD)
-        headerFecha.setTextColor(Color.BLACK)
-        headerFecha.gravity = Gravity.CENTER
-        headerRow.addView(headerFecha)
-
-        val headerMonto = TextView(this)
-        headerMonto.text = "Monto"
-        headerMonto.setPadding(8, 8, 8, 8)
-        headerMonto.setTypeface(null, Typeface.BOLD)
-        headerMonto.setTextColor(Color.BLACK)
-        headerMonto.gravity = Gravity.CENTER
-        headerRow.addView(headerMonto)
-
-        val headerCategoria = TextView(this)
-        headerCategoria.text = "Categoría"
-        headerCategoria.setPadding(8, 8, 8, 8)
-        headerCategoria.setTypeface(null, Typeface.BOLD)
-        headerCategoria.setTextColor(Color.BLACK)
-        headerCategoria.gravity = Gravity.CENTER
-        headerRow.addView(headerCategoria)
-
-        tablaSolicitudes.addView(headerRow)
-
-        for (ingreso in ingresos) {
-            val fila = TableRow(this)
-            fila.gravity = Gravity.CENTER_HORIZONTAL
-
-            val txtFecha = TextView(this)
-            txtFecha.text = ingreso.fecha
-            txtFecha.setPadding(8, 8, 8, 8)
-            txtFecha.gravity = Gravity.CENTER
-            fila.addView(txtFecha)
-
-            val txtMonto = TextView(this)
-            txtMonto.text = ingreso.monto.toString()
-            txtMonto.setPadding(8, 8, 8, 8)
-            txtMonto.gravity = Gravity.CENTER
-            fila.addView(txtMonto)
-
-            val txtCategoria = TextView(this)
-            txtCategoria.text = ingreso.categoria
-            txtCategoria.setPadding(8, 8, 8, 8)
-            txtCategoria.gravity = Gravity.CENTER
-            fila.addView(txtCategoria)
-
-            tablaSolicitudes.addView(fila)
-        }
-    }*/
-
-
 }

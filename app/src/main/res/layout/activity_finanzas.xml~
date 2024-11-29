@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.PlanificacionesPrincipal">
-    <FrameLayout
-        android:id="@+id/content_frame"
+    android:layout_height="match_parent">
+
+    <!-- ScrollView para permitir el desplazamiento -->
+    <android.widget.ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenedor para el Toolbar y el RecyclerView -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="0dp">
 
             <!-- Toolbar -->
             <androidx.appcompat.widget.Toolbar
@@ -35,131 +34,111 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <ImageButton
-                        android:id="@+id/backIcon"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/back"
-                        android:scaleType="fitCenter" />
-
                     <TextView
                         android:id="@+id/welcomeText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="45dp"
                         android:layout_weight="1"
-                        android:text="Planificacion"
+                        android:text="Finanzas"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         android:gravity="center" />
-
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
-            <!-- Título de la sección -->
-            <TextView
-                android:id="@+id/tituloQuejas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Planificacion"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"
-                android:gravity="center"/>
-
-            <!-- Espacio para botones de acceso a submodulos -->
-            <!-- Espacio para tarjetas de acceso a submodulos -->
+            <!-- Filtros -->
             <LinearLayout
-                android:id="@+id/cardContainer"
+                android:id="@+id/filtersLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/tituloQuejas"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:layout_marginTop="16dp"
+                android:padding="16dp"> <!-- Aseguramos que tenga padding para no tocar otros elementos -->
 
-                <!-- CardView para Módulo 1 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardModule1"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/pagosButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="8dp">
+                    android:text="Ver Pagos"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:layout_marginEnd="16dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/iconModule1"
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:src="@drawable/planificacion"
-                            android:layout_gravity="center"/>
-
-                        <TextView
-                            android:id="@+id/textModule1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Contactos"
-                            android:textSize="18sp"
-                            android:textColor="#0149AC"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center"/>
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <!-- CardView para Módulo 2 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardModule2"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/egresosButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/iconModule2"
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:src="@drawable/planificacion"
-                            android:layout_gravity="center"/>
-
-                        <TextView
-                            android:id="@+id/textModule2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Actividades"
-                            android:textSize="18sp"
-                            android:textColor="#0149AC"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center"/>
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
+                    android:text="Agregar Egresos"
+                    android:textColor="#FFFFFF"
+                    android:padding="10dp"
+                    android:layout_marginEnd="16dp" />
             </LinearLayout>
 
+            <!-- Totales Mensuales Chart -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardTotalesMensuales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:padding="16dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleTotalesMensuales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Totales Mensuales"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chartTotalesMensuales"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Acumulado Anual Chart -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAcumuladoAnual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginTop="16dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleAcumuladoAnual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Acumulado Anual"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chartAcumuladoAnual"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Bottom Navigation -->
             <LinearLayout
@@ -169,7 +148,7 @@
                 android:background="#FFFFFF"
                 android:elevation="8dp"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="@+id/cardAcumuladoAnual">
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -248,15 +227,13 @@
                 </FrameLayout>
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large" />
+        </LinearLayout>
 
-    </FrameLayout>
+
+
+
+    </android.widget.ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

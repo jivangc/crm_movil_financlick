@@ -90,7 +90,7 @@ class GenerarVenta : AppCompatActivity() {
                 val nuevoIngreso = IngresosEgresoModel(
                     fecha = fechaFormateada, // Fecha formateada
                     tipoTransaccion = 1,
-                    monto = 0.0, // Monto hardcoded
+                    monto = 100.0, // Monto hardcoded
                     descripcion = descripcion,
                     categoria = "Venta",
                     estatus = 1,

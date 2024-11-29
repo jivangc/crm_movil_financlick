@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,8 +22,8 @@ class EgresosActivity : AppCompatActivity() {
     private var egresoExistente: IngresosEgresoModel? = null
     private lateinit var montoEditText: EditText
     private lateinit var descripcionEditText: EditText
-    private lateinit var agregarButton: Button
-    private lateinit var eliminarButton: Button
+    private lateinit var agregarButton: FloatingActionButton
+    private lateinit var eliminarButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +34,17 @@ class EgresosActivity : AppCompatActivity() {
         agregarButton = findViewById(R.id.btnAgregar)
         eliminarButton = findViewById(R.id.btnEliminar)
 
+
+        val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
+        val bottomNavigationHelper = BottomNavigationHelper(this)
+        bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
+
         egresoExistente = intent.getSerializableExtra("egreso") as? IngresosEgresoModel
 
         egresoExistente?.let { egreso ->
             montoEditText.setText(egreso.monto.toString())
             descripcionEditText.setText(egreso.descripcion)
-            agregarButton.text = "Actualizar"
+            //agregarButton.text = "Actualizar"
             eliminarButton.visibility = View.VISIBLE
         }
 

@@ -39,14 +39,6 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <ImageButton
-                        android:id="@+id/backIcon"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/back"
-                        android:scaleType="fitCenter" />
-
                     <TextView
                         android:id="@+id/welcomeText"
                         android:layout_width="0dp"
@@ -312,7 +304,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
-            <!-- Botones -->
+            <!-- Botones
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -339,6 +331,39 @@
                     android:text="Guardar"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_marginStart="8dp" />
+            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Cancelar"
+                    android:backgroundTint="#F7DC6F"
+                    style="@style/Widget.MaterialComponents.FloatingActionButton"
+                    android:layout_marginEnd="8dp"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnEnviar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/save"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Guardar"
+                    android:backgroundTint="#4CAF50"
+                    style="@style/Widget.MaterialComponents.FloatingActionButton"
+                    android:layout_marginStart="8dp"/>
             </LinearLayout>
 
             <!-- Bottom Navigation -->

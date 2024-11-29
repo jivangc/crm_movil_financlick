@@ -33,16 +33,6 @@
             android:maxLines="1" />
 
         <TextView
-            android:id="@+id/txtFecha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fecha: $0.00 USD"
-            android:textSize="14sp"
-            android:ellipsize="end"
-            android:maxLines="1" />
-
-
-        <TextView
             android:id="@+id/txtMonto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

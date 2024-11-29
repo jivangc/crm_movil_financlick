@@ -22,10 +22,13 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
+import java.util.Locale
 
 class FinanzasActivity : AppCompatActivity() {
 
@@ -142,7 +145,6 @@ class FinanzasActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
-
                         // Sumar los valores de ingresos y egresos
                         val ingresosSum = data.sumOf { it.ingresosAcumulados.toDouble() }
                         val egresosSum = data.sumOf { it.egresosAcumulados.toDouble() }
@@ -156,13 +158,51 @@ class FinanzasActivity : AppCompatActivity() {
                         // Crear y personalizar el DataSet del gráfico circular
                         val dataSet = PieDataSet(pieEntries, "Acumulado Anual")
                         dataSet.colors = listOf(
-                            ColorTemplate.COLORFUL_COLORS[0],
-                            ColorTemplate.COLORFUL_COLORS[1]
+                            ContextCompat.getColor(this@FinanzasActivity, R.color.ingresos_color),
+                            ContextCompat.getColor(this@FinanzasActivity, R.color.egresos_color)
                         )
+                        dataSet.sliceSpace = 3f
+                        dataSet.selectionShift = 5f
 
-                        // Asignar los datos y actualizar la gráfica
+                        // Configurar el formato de los valores
+                        val formatter = NumberFormatter()
+                        formatter.minimumFractionDigits = 0
+                        formatter.maximumFractionDigits = 2
+                        formatter.locale = Locale("es", "MX")
+
+                        // Asignar los datos y configurar la gráfica
                         val pieData = PieData(dataSet)
-                        chartAcumuladoAnual.data = pieData
+                        pieData.setValueFormatter(PercentFormatter(chartAcumuladoAnual))
+                        pieData.setValueTextSize(11f)
+                        pieData.setValueTextColor(Color.WHITE)
+
+                        chartAcumuladoAnual.apply {
+                            data = pieData
+                            description.isEnabled = false
+                            setUsePercentValues(true)
+                            setExtraOffsets(5f, 10f, 5f, 5f)
+                            dragDecelerationFrictionCoef = 0.95f
+                            isDrawHoleEnabled = true
+                            setHoleColor(Color.WHITE)
+                            transparentCircleRadius = 61f
+                            setEntryLabelColor(Color.WHITE)
+                            setEntryLabelTextSize(12f)
+                            legend.isEnabled = true
+                            legend.orientation = Legend.LegendOrientation.VERTICAL
+                            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                            legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+                            legend.setDrawInside(false)
+                            setDrawCenterText(true)
+                            centerText = "Acumulado\nAnual"
+                            animateY(1400, Easing.EaseInOutQuad)
+                        }
+
+                        // Calcular y mostrar el total
+                        val total = ingresosSum + egresosSum
+                        val totalFormatted = formatter.format(total)
+                        tvTotalAcumulado.text = "Total: $totalFormatted"
+
+                        // Refrescar la gráfica
                         chartAcumuladoAnual.invalidate()
                     }
                 } else {
@@ -174,5 +214,13 @@ class FinanzasActivity : AppCompatActivity() {
                 Toast.makeText(this@FinanzasActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    class NumberFormatter : ValueFormatter() {
+        private val format = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+
+        override fun getFormattedValue(value: Float): String {
+            return format.format(value.toDouble())
+        }
     }
 }
