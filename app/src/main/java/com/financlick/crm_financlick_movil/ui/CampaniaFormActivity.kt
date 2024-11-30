@@ -1,8 +1,10 @@
 package com.financlick.crm_financlick_movil.ui
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -41,9 +43,6 @@ class CampaniaFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_campania_form)
-        var campaniaRaw = intent.getStringExtra("campania").toString()
-        val campania = Gson().fromJson(campaniaRaw, CardCampaniaItem::class.java)
-
 
         val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
         val bottomNavigationHelper = BottomNavigationHelper(this)
@@ -59,21 +58,13 @@ class CampaniaFormActivity : AppCompatActivity() {
 
         btnGuardar = findViewById(R.id.btnEnviar)
         btnCancelar = findViewById(R.id.btnCancelar)
+        val btnEliminar: FloatingActionButton = findViewById(R.id.btn_eliminar)
 
-        // Formato de fecha
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
-
-        // Manejador para fecha de inicio
-        fechaInicioInput.setOnClickListener {
-            showDatePickerDialog(fechaInicioInput, dateFormat)
-        }
-
-        // Manejador para fecha de fin
-        fechaFinInput.setOnClickListener {
-            showDatePickerDialog(fechaFinInput, dateFormat)
-        }
+        val campaniaRaw = intent.getStringExtra("campania").toString()
+        val campania = Gson().fromJson(campaniaRaw, CardCampaniaItem::class.java)
 
         campania?.let {
+            // Llenar campos con datos de la campaña existente
             tipoCampaniaInput.setText(it.tipo)
             tituloCampaniaInput.setText(it.nombre)
             descripcionCampaniaInput.setText(it.asunto)
@@ -81,12 +72,20 @@ class CampaniaFormActivity : AppCompatActivity() {
             fechaInicioInput.setText(it.createdDate.toString())
             fechaFinInput.setText(it.scheduleDate.toString())
             contenidoInput.setText(it.contenido)
-        }
 
+            // Mostrar el botón de eliminar solo si se está editando
+            btnEliminar.visibility = View.VISIBLE
+            btnEliminar.setOnClickListener {
+                eliminarCampania(campania.idCampania)
+            }
+        } ?: run {
+            // Ocultar el botón de eliminar si se crea una nueva campaña
+            btnEliminar.visibility = View.GONE
+        }
 
         btnGuardar.setOnClickListener {
             if (validateFields()) {
-                var idCampania = campania?.idCampania ?: 0
+                val idCampania = campania?.idCampania ?: 0
                 val formCampania = loadCampania(idCampania)
                 if (idCampania != 0) {
                     actualizarCampania(formCampania)
@@ -96,10 +95,33 @@ class CampaniaFormActivity : AppCompatActivity() {
             }
         }
 
-        btnCancelar.setOnClickListener() {
+        btnCancelar.setOnClickListener {
             finish()
         }
     }
+
+    private fun eliminarCampania(idCampania: Int) {
+        RetrofitClient.instance.deleteCampania(idCampania).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@CampaniaFormActivity, "Campaña eliminada exitosamente", Toast.LENGTH_SHORT).show()
+                    var intent = Intent(this@CampaniaFormActivity, CampanasActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val error = response.errorBody()?.string()
+                    Toast.makeText(this@CampaniaFormActivity, "Error al eliminar la campaña: $error", Toast.LENGTH_SHORT).show()
+                    Log.e("EliminarCampania", "Error: $error")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(this@CampaniaFormActivity, "Error en la solicitud: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("EliminarCampania", "Error: ${t.message}")
+            }
+        })
+    }
+
+
 
     private fun validateFields(): Boolean {
         var isValid = true
@@ -195,7 +217,8 @@ class CampaniaFormActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@CampaniaFormActivity, "Campania creada exitosamente", Toast.LENGTH_SHORT).show()
-                    finish()
+                    var intent = Intent(this@CampaniaFormActivity, CampanasActivity::class.java)
+                    startActivity(intent)
                 } else {
                     val error = response.errorBody()?.string()
                     Toast.makeText(this@CampaniaFormActivity, "Error en la respuesta: $error", Toast.LENGTH_SHORT).show()
@@ -215,7 +238,8 @@ class CampaniaFormActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@CampaniaFormActivity, "Campania actualizada exitosamente", Toast.LENGTH_SHORT).show()
-                    finish()
+                    var intent = Intent(this@CampaniaFormActivity, CampanasActivity::class.java)
+                    startActivity(intent)
                 } else {
                     val error = response.errorBody()?.string()
                     Toast.makeText(this@CampaniaFormActivity, "Error en la respuesta: $error", Toast.LENGTH_SHORT).show()

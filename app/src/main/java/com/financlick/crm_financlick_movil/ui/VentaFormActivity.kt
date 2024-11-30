@@ -1,6 +1,9 @@
 package com.financlick.crm_financlick_movil.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -9,6 +12,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.financlick.crm_financlick_movil.R
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.items.CardVentaItem
@@ -37,9 +42,12 @@ class VentaFormActivity : AppCompatActivity() {
     private lateinit var empleadoSpinner: Spinner
     private lateinit var btnEnviar: FloatingActionButton
     private lateinit var btnCancelar: FloatingActionButton
+    private lateinit var btnLlamar: MaterialButton
     private var ventaActual: CardVentaItem? = null
     private var empleados = listOf<UsuarioModel>()
     private var contexto = this
+    private val REQUEST_CALL = 1
+    private val REQUEST_CALL_PERMISSION = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +62,8 @@ class VentaFormActivity : AppCompatActivity() {
 
         // Obtener la venta actual utilizando la clave correcta
         ventaActual = intent.getSerializableExtra("VENTA_ACTUAL") as? CardVentaItem
+        btnLlamar = findViewById(R.id.btnLlamar)
+
 
         mostrarDatosVenta()
 
@@ -66,6 +76,40 @@ class VentaFormActivity : AppCompatActivity() {
 
         btnCancelar.setOnClickListener {
             finish()
+        }
+
+
+        btnLlamar.setOnClickListener {
+            val telefono = ventaActual?.numeroContacto ?: ""
+            if (telefono.isNotEmpty()) {
+                realizarLlamada(telefono)
+            } else {
+                Toast.makeText(this, "Por favor, ingrese un número de teléfono", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    }
+
+
+    private fun realizarLlamada(numero: String) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL)
+        } else {
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$numero"))
+            startActivity(intent)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CALL_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val telefono = ventaActual?.numeroContacto ?: ""
+                realizarLlamada(telefono)
+            } else {
+                Toast.makeText(this, "Permiso para llamadas no concedido", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -99,6 +143,8 @@ class VentaFormActivity : AppCompatActivity() {
             rfc.setText(it.rfc)
         }
     }
+
+
 
     private fun fetchUsuariosPorRol() {
         RetrofitClient.instance.getUsuariosPorRol().enqueue(object : Callback<List<UsuarioModel>> {
@@ -158,10 +204,10 @@ class VentaFormActivity : AppCompatActivity() {
                     Toast.makeText(contexto, "Venta actualizada", Toast.LENGTH_SHORT).show()
 
                     // Ir a HomeActivity y finalizar la actividad actual
-                    val intent = Intent(this@VentaFormActivity, HomeActivity::class.java)
+                    val intent = Intent(this@VentaFormActivity, VentasActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
-                    finish() // Cierra VentaFormActivity
+                    //finish() // Cierra VentaFormActivity
                 } else {
                     // Detalles de error cuando no es exitoso
                     Log.e("VentaFormActivity", "Error en la respuesta: código ${response.code()}, mensaje: ${response.message()}, cuerpo: ${response.errorBody()?.string()}")

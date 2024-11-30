@@ -151,6 +151,9 @@ interface ServiceApi {
     @GET("PlanEmpresa/{idPlan}")
     fun getPlanById(@Path("idPlan") idPlan: Int): Call<PlanEmpresaModel>
 
+    @GET("PlanEmpresa")
+    fun getPlanes(): Call<List<PlanEmpresaModel>>
+
     // ------------- Campanias -------------
     @GET("Campania")
     fun getCampanias(): Call<List<CampaniaModel>>

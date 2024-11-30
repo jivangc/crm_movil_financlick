@@ -394,8 +394,8 @@
                         android:orientation="horizontal"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="24dp"
-                        android:layout_marginBottom="30dp"
-                        app:layout_constraintTop_toBottomOf="@id/iv_logo_preview"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/empresaIdLayout"
                         app:layout_constraintEnd_toEndOf="parent">
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton

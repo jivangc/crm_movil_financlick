@@ -363,8 +363,8 @@ class EmpresaFormActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (telefono.text.isNullOrBlank() || telefono.text.toString().length < 10) {
-            telefono.error = "El teléfono es obligatorio minimo 10 digitos"
+        if (telefono.text.isNullOrBlank() || telefono.text.toString().length < 10 || telefono.text.toString().length > 10) {
+            telefono.error = "El teléfono es obligatorio de 10 digitos"
             isValid = false
         }
 

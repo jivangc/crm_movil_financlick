@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
 import android.widget.LinearLayout
+import android.widget.Spinner
 
 import com.financlick.crm_financlick_movil.api.RetrofitClient
 import com.financlick.crm_financlick_movil.models.PlanificacionModel
@@ -43,6 +44,8 @@ class PlanificacionFormActivity : AppCompatActivity() {
     private val REQUEST_CALL_PERMISSION = 1
     private var idEmpresa = 0
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_planificacion_form)
@@ -60,6 +63,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
         btnGuardar = findViewById(R.id.btnGuardar)
         btnCancelar = findViewById(R.id.btnCancelar)
         btnLlamar = findViewById(R.id.btnLlamar)
+        val btnEliminar: FloatingActionButton = findViewById(R.id.btn_eliminar)
 
         idEmpresa = intent.getIntExtra("idEmpresa", 0)
 
@@ -68,11 +72,12 @@ class PlanificacionFormActivity : AppCompatActivity() {
         contacto = if (!contactoRaw.isNullOrEmpty()) {
             Gson().fromJson(contactoRaw, PlanificacionModel::class.java).also {
                 llenarCampos(it)
+                btnEliminar.visibility = View.VISIBLE // Mostrar el botón si hay un contacto
             }
         } else {
+            btnEliminar.visibility = View.GONE // Ocultar el botón si no hay contacto
             null
         }
-
 
         // Configurar el botón de guardar
         btnGuardar.setOnClickListener {
@@ -84,6 +89,13 @@ class PlanificacionFormActivity : AppCompatActivity() {
                     actualizarContacto(contactoRequest)
                 }
             }
+        }
+
+        // Configurar el botón de eliminar
+        btnEliminar.setOnClickListener {
+            contacto?.idContacto?.let { id ->
+                eliminarContacto(id)
+            } ?: Toast.makeText(this, "No se puede eliminar un contacto inexistente", Toast.LENGTH_SHORT).show()
         }
 
         // Configurar el botón de cancelar
@@ -103,8 +115,28 @@ class PlanificacionFormActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, ingrese un número de teléfono", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
+    private fun eliminarContacto(idContacto: Int) {
+        RetrofitClient.instance.deleteContacto(idContacto).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@PlanificacionFormActivity, "Contacto eliminado exitosamente", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@PlanificacionFormActivity, PanificacionActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val error = response.errorBody()?.string()
+                    Toast.makeText(this@PlanificacionFormActivity, "Error al eliminar el contacto: $error", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(this@PlanificacionFormActivity, "Error en la solicitud: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 
     private fun callCards() {
         val intent = Intent(this, PanificacionActivity::class.java)
@@ -146,7 +178,7 @@ class PlanificacionFormActivity : AppCompatActivity() {
             apellidoInput.error = "El apellido es requerido"
             isValid = false
         }
-        if (telefonoInput.text.isNullOrBlank() || telefonoInput.text.toString().length < 10) {
+        if (telefonoInput.text.isNullOrBlank() || telefonoInput.text.toString().length < 10 || telefonoInput.text.toString().length > 10) {
             telefonoInput.error = "El teléfono es requerido minimo 10 digitos"
             isValid = false
         }

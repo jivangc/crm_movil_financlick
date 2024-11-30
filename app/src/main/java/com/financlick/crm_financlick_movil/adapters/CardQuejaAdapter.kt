@@ -33,7 +33,7 @@ class CardQuejaAdapter(private var items: List<CardQuejaItem>): RecyclerView.Ada
         holder.buttonView.setOnClickListener {
             val intent = Intent(holder.itemView.context, QuejaFormActivity::class.java)
             intent.putExtra("queja", Gson().toJson(quejaItem))
-            Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
             holder.itemView.context.startActivity(intent)
         }
     }

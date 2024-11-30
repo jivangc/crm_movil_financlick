@@ -19,6 +19,7 @@ import com.financlick.crm_financlick_movil.models.IngresosEgresoModel
 import com.financlick.crm_financlick_movil.models.PlanEmpresaModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,14 +30,17 @@ import java.util.Locale
 class GenerarVenta : AppCompatActivity() {
 
     private lateinit var empresaSpinner: Spinner
+    private lateinit var planSpinner: Spinner
     private lateinit var empresas: List<EmpresaModel>
+    private lateinit var planes: List<PlanEmpresaModel>
     private lateinit var ventaProspecto: CardVentaItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generar_venta)
 
-        ventaProspecto = intent.getSerializableExtra("VENTA_PROSPECTO") as CardVentaItem
+        val ventaJson = intent.getStringExtra("VENTA_PROSPECTO")
+        ventaProspecto = Gson().fromJson(ventaJson, CardVentaItem::class.java)
 
         if (ventaProspecto.idUsuario == null) {
             Toast.makeText(this, "Asigna un usuario primero a la venta", Toast.LENGTH_SHORT).show()
@@ -44,32 +48,23 @@ class GenerarVenta : AppCompatActivity() {
             return
         }
 
-
         val bottomNavigationLayout = findViewById<LinearLayout>(R.id.bottomNavigation)
         val bottomNavigationHelper = BottomNavigationHelper(this)
         bottomNavigationHelper.setupBottomNavigation(bottomNavigationLayout)
 
-
-        val idPlan = ventaProspecto.idVPlan
-        obtenerPlanPorId(idPlan)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Configura la Toolbar
+        /* Configura la Toolbar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             finish()
-        }
+        }*/
 
-        // Inicializa el Spinner para mostrar las empresas
+        // Inicializa Spinners
         empresaSpinner = findViewById(R.id.tipoVentaSpinner)
+        planSpinner = findViewById(R.id.planVentaSpinner)
         cargarEmpresas()
+        cargarPlanes()
 
         val descripcionInput: TextInputEditText = findViewById(R.id.descripcionInput)
 
@@ -78,78 +73,35 @@ class GenerarVenta : AppCompatActivity() {
         btnGuardarVenta.setOnClickListener {
             val descripcion = descripcionInput.text.toString()
             val empresaSeleccionada = empresas[empresaSpinner.selectedItemPosition]
+            val planSeleccionadoPos = planSpinner.selectedItemPosition
 
             if (descripcion.isEmpty()) {
                 descripcionInput.error = "La descripción es obligatoria"
                 Toast.makeText(this, "La descripción es obligatoria", Toast.LENGTH_SHORT).show()
-            } else {
-                // Formatear la fecha actual en "yyyy-MM-dd"
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val fechaFormateada = dateFormat.format(Date())
-
-                val nuevoIngreso = IngresosEgresoModel(
-                    fecha = fechaFormateada, // Fecha formateada
-                    tipoTransaccion = 1,
-                    monto = 0.0, // Monto hardcoded
-                    descripcion = descripcion,
-                    categoria = "Venta",
-                    estatus = 1,
-                    idEmpresa = empresaSeleccionada.idEmpresa
-                )
-
-                guardarIngreso(nuevoIngreso)
-            }
-        }
-    }
-
-    private fun obtenerPlanPorId(idPlan: Int) {
-        RetrofitClient.instance.getPlanById(idPlan).enqueue(object : Callback<PlanEmpresaModel> {
-            override fun onResponse(call: Call<PlanEmpresaModel>, response: Response<PlanEmpresaModel>) {
-                if (response.isSuccessful) {
-                    val plan = response.body()
-                    val precio = plan?.precio ?: 0.0
-
-                    // Aquí continúa con la lógica de la vista para capturar la descripción y demás
-                    configurarBotonGuardarVenta(precio)
-                } else {
-                    Toast.makeText(this@GenerarVenta, "Error al obtener el plan", Toast.LENGTH_SHORT).show()
-                }
+                return@setOnClickListener
             }
 
-            override fun onFailure(call: Call<PlanEmpresaModel>, t: Throwable) {
-                Toast.makeText(this@GenerarVenta, "Error en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.e("GenerarVenta", "Error en la conexión: ${t.message}", t)
+            if (planSeleccionadoPos == 0) {
+                Toast.makeText(this, "Por favor selecciona un plan", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-        })
-    }
 
-    private fun configurarBotonGuardarVenta(precio: Double) {
-        val descripcionInput: TextInputEditText = findViewById(R.id.descripcionInput)
-        val btnGuardarVenta: Button = findViewById(R.id.btnGuardarVenta)
+            val planSeleccionado = planes[planSeleccionadoPos - 1]
 
-        btnGuardarVenta.setOnClickListener {
-            val descripcion = descripcionInput.text.toString()
-            val empresaSeleccionada = empresas[empresaSpinner.selectedItemPosition]
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val fechaFormateada = dateFormat.format(Date())
 
-            if (descripcion.isEmpty()) {
-                descripcionInput.error = "La descripción es obligatoria"
-                Toast.makeText(this, "La descripción es obligatoria", Toast.LENGTH_SHORT).show()
-            } else {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val fechaFormateada = dateFormat.format(Date())
+            val nuevoIngreso = IngresosEgresoModel(
+                fecha = fechaFormateada,
+                tipoTransaccion = 1,
+                monto = planSeleccionado.precio,
+                descripcion = descripcion,
+                categoria = "Venta",
+                estatus = 1,
+                idEmpresa = empresaSeleccionada.idEmpresa
+            )
 
-                val nuevoIngreso = IngresosEgresoModel(
-                    fecha = fechaFormateada,
-                    tipoTransaccion = 1,
-                    monto = precio,
-                    descripcion = descripcion,
-                    categoria = "Venta",
-                    estatus = 1,
-                    idEmpresa = empresaSeleccionada.idEmpresa
-                )
-
-                guardarIngreso(nuevoIngreso)
-            }
+            guardarIngreso(nuevoIngreso)
         }
     }
 
@@ -160,7 +112,6 @@ class GenerarVenta : AppCompatActivity() {
                     empresas = response.body() ?: emptyList()
                     val nombresEmpresas = empresas.map { it.nombreEmpresa }
 
-                    // Configura el Spinner con los nombres de las empresas
                     val adapter = ArrayAdapter(this@GenerarVenta, android.R.layout.simple_spinner_item, nombresEmpresas)
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     empresaSpinner.adapter = adapter
@@ -175,6 +126,27 @@ class GenerarVenta : AppCompatActivity() {
         })
     }
 
+    private fun cargarPlanes() {
+        RetrofitClient.instance.getPlanes().enqueue(object : Callback<List<PlanEmpresaModel>> {
+            override fun onResponse(call: Call<List<PlanEmpresaModel>>, response: Response<List<PlanEmpresaModel>>) {
+                if (response.isSuccessful) {
+                    planes = response.body() ?: emptyList()
+                    val nombresPlanes = listOf("Selecciona un plan") + planes.map { it.descripcion }
+
+                    val adapter = ArrayAdapter(this@GenerarVenta, android.R.layout.simple_spinner_item, nombresPlanes)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    planSpinner.adapter = adapter
+                } else {
+                    Toast.makeText(this@GenerarVenta, "Error al obtener los planes", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<PlanEmpresaModel>>, t: Throwable) {
+                Toast.makeText(this@GenerarVenta, "Error en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     private fun guardarIngreso(ingreso: IngresosEgresoModel) {
         val idVentaProspecto = ventaProspecto.idVenta
 
@@ -182,7 +154,6 @@ class GenerarVenta : AppCompatActivity() {
             override fun onResponse(call: Call<IngresosEgresoModel>, response: Response<IngresosEgresoModel>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@GenerarVenta, "Ingreso guardado correctamente", Toast.LENGTH_SHORT).show()
-
                     setResult(RESULT_OK)
                     finish()
                 } else {
@@ -198,5 +169,5 @@ class GenerarVenta : AppCompatActivity() {
             }
         })
     }
-
 }
+

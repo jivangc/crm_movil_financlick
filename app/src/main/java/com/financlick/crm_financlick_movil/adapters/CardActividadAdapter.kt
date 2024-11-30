@@ -49,7 +49,7 @@ class CardActividadAdapter(private var items: List<CardActividadItem>) : Recycle
         holder.buttonView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ActividadFormActivity::class.java)
             intent.putExtra("actividad", Gson().toJson(actividadItem))
-            Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(it.context, "Botón pulsado", Toast.LENGTH_SHORT).show()
             holder.itemView.context.startActivity(intent)
         }
     }
